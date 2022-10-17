@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 2,
+  "components": [
+    {
+      "label": "Ticket price",
+      "type": "textfield",
+      "id": "Field_1lgtwtd",
+      "key": "ticketPrice",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_13da4h7"
+}

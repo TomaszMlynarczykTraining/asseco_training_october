@@ -30,6 +30,7 @@ public class MockDelegate implements JavaDelegate {
 
 
         System.out.println("Service task!");
+        System.out.println("Service task!");
 
         //System.out.println(runtimeService.getVariable(delegateExecution.getProcessInstanceId(), "pizza"));
 

@@ -18,7 +18,6 @@ public class NotificationBean implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-
         System.out.println("Notification created");
     }
 }

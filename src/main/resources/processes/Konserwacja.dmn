@@ -12,12 +12,20 @@
           <text>Koszt</text>
         </inputExpression>
       </input>
+      <input id="InputClause_09opida" label="Tresc">
+        <inputExpression id="LiteralExpression_0br3f78" typeRef="string">
+          <text>notificationList[1].tresc</text>
+        </inputExpression>
+      </input>
       <output id="Output_1" name="Result" typeRef="string" />
       <rule id="DecisionRule_1x9dwj8">
         <inputEntry id="UnaryTests_06uzkg8">
           <text>not("PL")</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0657jq2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1v16m68">
           <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1veiqa3">
@@ -31,6 +39,9 @@
         <inputEntry id="UnaryTests_1hfhswe">
           <text>&gt;3000</text>
         </inputEntry>
+        <inputEntry id="UnaryTests_0ur1l9w">
+          <text></text>
+        </inputEntry>
         <outputEntry id="LiteralExpression_0htmppf">
           <text>"To further acc"</text>
         </outputEntry>
@@ -42,7 +53,24 @@
         <inputEntry id="UnaryTests_0efmzv1">
           <text></text>
         </inputEntry>
+        <inputEntry id="UnaryTests_13j6ibp">
+          <text>"powiadomienie 1"</text>
+        </inputEntry>
         <outputEntry id="LiteralExpression_0aeexhq">
+          <text>"Tresc"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_065h9rp">
+        <inputEntry id="UnaryTests_15va4uf">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_15w2co1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14ncytm">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1qqnyim">
           <text>"Positive"</text>
         </outputEntry>
       </rule>

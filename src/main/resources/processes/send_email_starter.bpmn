@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_00pjmyo" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <bpmn:process id="Process_0wmcdmo" name="Send email starter" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0631rdy</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0631rdy" sourceRef="StartEvent_1" targetRef="Activity_10j3nhr" />
+    <bpmn:callActivity id="Process_011rm9" name="Send email process" calledElement="Process_011rm9r" camunda:variableMappingDelegateExpression="${emailSenderVariablesMapper}">
+      <bpmn:extensionElements>
+        <camunda:in businessKey="#{execution.processBusinessKey}" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_19lb2it</bpmn:incoming>
+      <bpmn:outgoing>Flow_1tdc7lw</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:endEvent id="Event_09mh6cj">
+      <bpmn:incoming>Flow_1rbb4q7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1tdc7lw" sourceRef="Process_011rm9" targetRef="Activity_1mr0tjp" />
+    <bpmn:sequenceFlow id="Flow_1rbb4q7" sourceRef="Activity_1mr0tjp" targetRef="Event_09mh6cj" />
+    <bpmn:userTask id="Activity_1mr0tjp" name="Another task">
+      <bpmn:incoming>Flow_1tdc7lw</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rbb4q7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_19lb2it" sourceRef="Activity_10j3nhr" targetRef="Process_011rm9" />
+    <bpmn:callActivity id="Activity_10j3nhr" name="Send email process without delegate mapping" calledElement="Process_011rm9r">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="emailAddress">${emailAddress}</camunda:inputParameter>
+        </camunda:inputOutput>
+        <camunda:out variables="all" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0631rdy</bpmn:incoming>
+      <bpmn:outgoing>Flow_19lb2it</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:textAnnotation id="TextAnnotation_1ptnv2r">
+      <bpmn:text>Mapping done by delegate and input</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_15hnb71" sourceRef="Activity_10j3nhr" targetRef="TextAnnotation_1ptnv2r" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0wmcdmo">
+      <bpmndi:BPMNShape id="TextAnnotation_1ptnv2r_di" bpmnElement="TextAnnotation_1ptnv2r">
+        <dc:Bounds x="240" y="80" width="100" height="55" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fnxdmt_di" bpmnElement="Process_011rm9">
+        <dc:Bounds x="430" y="197" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_09mh6cj_di" bpmnElement="Event_09mh6cj">
+        <dc:Bounds x="772" y="219" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vudabh_di" bpmnElement="Activity_1mr0tjp">
+        <dc:Bounds x="610" y="197" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="219" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sokdy3_di" bpmnElement="Activity_10j3nhr">
+        <dc:Bounds x="280" y="197" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_15hnb71_di" bpmnElement="Association_15hnb71">
+        <di:waypoint x="319" y="197" />
+        <di:waypoint x="301" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19lb2it_di" bpmnElement="Flow_19lb2it">
+        <di:waypoint x="380" y="237" />
+        <di:waypoint x="430" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1tdc7lw_di" bpmnElement="Flow_1tdc7lw">
+        <di:waypoint x="530" y="237" />
+        <di:waypoint x="610" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rbb4q7_di" bpmnElement="Flow_1rbb4q7">
+        <di:waypoint x="710" y="237" />
+        <di:waypoint x="772" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0631rdy_di" bpmnElement="Flow_0631rdy">
+        <di:waypoint x="188" y="237" />
+        <di:waypoint x="280" y="237" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

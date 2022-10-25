@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_14wfmrs" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <decision id="Decision_Konserwacja" name="Decision 1">
+    <decisionTable id="DecisionTable_0g4v43c" hitPolicy="FIRST">
+      <input id="Input_1">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>Kraj</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1eulxtw" biodi:width="192">
+        <inputExpression id="LiteralExpression_0bbltam" typeRef="integer">
+          <text>Koszt</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="Result" typeRef="string" />
+      <rule id="DecisionRule_1x9dwj8">
+        <inputEntry id="UnaryTests_06uzkg8">
+          <text>not("PL")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0657jq2">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1veiqa3">
+          <text>"Cancelled"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1s4a951">
+        <inputEntry id="UnaryTests_0j2uvtm">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1hfhswe">
+          <text>&gt;3000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0htmppf">
+          <text>"To further acc"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1njqb6k">
+        <inputEntry id="UnaryTests_13hnt6b">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0efmzv1">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0aeexhq">
+          <text>"Positive"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_Konserwacja">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

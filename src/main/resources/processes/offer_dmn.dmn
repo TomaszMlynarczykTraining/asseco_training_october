@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0pk1j79" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <decision id="Decision_1p78bvz" name="Decision 1">
+    <decisionTable id="DecisionTable_071j27f" hitPolicy="FIRST">
+      <input id="Input_1">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>country</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0iew6wc">
+        <inputExpression id="LiteralExpression_07fbbhr" typeRef="long">
+          <text>amount</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="status" typeRef="string" />
+      <rule id="DecisionRule_1u57651">
+        <inputEntry id="UnaryTests_0dvjebh">
+          <text>not("PL")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1lc45xa">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1bakqgu">
+          <text>"INACTIVE"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_171rf5w">
+        <inputEntry id="UnaryTests_0hskzlg">
+          <text>"PL"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_12ej12z">
+          <text>&gt;2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0wyrvry">
+          <text>"ACCEPTED"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ol7eol">
+        <inputEntry id="UnaryTests_07h8pcp">
+          <text>"PL"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_11gerwe">
+          <text>&lt;2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0df9u8r">
+          <text>"ARCHIVED"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_02hlpyy">
+        <inputEntry id="UnaryTests_0o2t3fa">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1grwau5">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0wzqqzl">
+          <text>"UNKNOWN"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1p78bvz">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0wd6cf7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0wd6cf7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
   <bpmn:collaboration id="Collaboration_0q6b1ts">
     <bpmn:participant id="Participant_1iuk887" name="Recruitment process" processRef="Recruitment_process" />
   </bpmn:collaboration>
@@ -115,7 +115,7 @@
     <bpmn:sequenceFlow id="Flow_0geiw7y" name="person not hired" sourceRef="Gateway_0gkonwh" targetRef="Activity_0pn9s0s">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${offerAccepted == 'no'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:callActivity id="Activity_1xhsc5z" name="Send message" calledElement="Process_send_message">
+    <bpmn:callActivity id="Activity_1xhsc5z" name="Send message" calledElement="Process_send_message" camunda:variableMappingDelegateExpression="${recruitmentProcessVariableMapper}">
       <bpmn:incoming>Flow_12zv7kx</bpmn:incoming>
       <bpmn:outgoing>Flow_0plrhxa</bpmn:outgoing>
     </bpmn:callActivity>

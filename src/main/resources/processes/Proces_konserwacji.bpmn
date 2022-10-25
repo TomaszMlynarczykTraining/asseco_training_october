@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1gu51ys" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
-  <bpmn:collaboration id="Proces_konserwacji">
+  <bpmn:collaboration id="PR_001_AS_UT_006">
     <bpmn:participant id="Participant_15emr9k" name="Proces konserwacji" processRef="Process_konserwacji" />
   </bpmn:collaboration>
   <bpmn:process id="Process_konserwacji" isExecutable="true">
@@ -31,6 +31,8 @@
         <bpmn:flowNodeRef>PR_001_AS_GTW_001</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>PR_001_AS_ST_001</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>PR_001_AS_UT_001</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0inroeq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1gckezp</bpmn:flowNodeRef>
         <bpmn:childLaneSet id="LaneSet_119b100">
           <bpmn:lane id="Lane_1k8p04y">
             <bpmn:flowNodeRef>PR_001_AS_UT_002</bpmn:flowNodeRef>
@@ -38,6 +40,8 @@
             <bpmn:flowNodeRef>PR_001_AS_GTW_001</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>PR_001_AS_ST_001</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>PR_001_AS_UT_001</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Activity_0inroeq</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Activity_1gckezp</bpmn:flowNodeRef>
           </bpmn:lane>
         </bpmn:childLaneSet>
       </bpmn:lane>
@@ -85,6 +89,7 @@
     <bpmn:serviceTask id="PR_001_AS_ST_001" name="Utworzenie powiadomienia" camunda:delegateExpression="${notificationBean}">
       <bpmn:incoming>Flow_1h8d5eh</bpmn:incoming>
       <bpmn:outgoing>Flow_1rodvez</bpmn:outgoing>
+      <bpmn:outgoing>Flow_15s7bf3</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0rhbqvg" sourceRef="PR_001_AS_UT_001" targetRef="PR_001_AS_UT_002" />
     <bpmn:callActivity id="PR_001_AS_UT_001" name="Utworzenie zlecenia alimentacyjnego" calledElement="Process_UZA" camunda:variableMappingDelegateExpression="${procesKonserwacjiVariablesMapper}">
@@ -94,19 +99,41 @@
       <bpmn:incoming>Flow_1rodvez</bpmn:incoming>
       <bpmn:outgoing>Flow_0rhbqvg</bpmn:outgoing>
     </bpmn:callActivity>
+    <bpmn:serviceTask id="Activity_0inroeq" name="Get notifications" camunda:delegateExpression="${getAllNotificationsDelegate}">
+      <bpmn:incoming>Flow_15s7bf3</bpmn:incoming>
+      <bpmn:outgoing>Flow_05dk7k1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_05dk7k1" sourceRef="Activity_0inroeq" targetRef="Activity_1gckezp" />
+    <bpmn:sequenceFlow id="Flow_15s7bf3" sourceRef="PR_001_AS_ST_001" targetRef="Activity_0inroeq" />
+    <bpmn:subProcess id="Activity_1gckezp">
+      <bpmn:incoming>Flow_05dk7k1</bpmn:incoming>
+      <bpmn:startEvent id="Event_0i12dlr">
+        <bpmn:outgoing>Flow_0w9wcvu</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="Activity_1amqpod" name="Utworzenie zlecenia alimentacyjnego">
+        <bpmn:incoming>Flow_0w9wcvu</bpmn:incoming>
+        <bpmn:outgoing>Flow_1634skh</bpmn:outgoing>
+        <bpmn:multiInstanceLoopCharacteristics camunda:collection="notificationList" camunda:elementVariable="notification" />
+      </bpmn:userTask>
+      <bpmn:endEvent id="Event_0v8tppy">
+        <bpmn:incoming>Flow_1634skh</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1634skh" sourceRef="Activity_1amqpod" targetRef="Event_0v8tppy" />
+      <bpmn:sequenceFlow id="Flow_0w9wcvu" sourceRef="Event_0i12dlr" targetRef="Activity_1amqpod" />
+    </bpmn:subProcess>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proces_konserwacji">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="PR_001_AS_UT_006">
       <bpmndi:BPMNShape id="Participant_15emr9k_di" bpmnElement="Participant_15emr9k" isHorizontal="true">
-        <dc:Bounds x="145" y="115" width="1189" height="510" />
+        <dc:Bounds x="145" y="115" width="1189" height="715" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0qy84oj_di" bpmnElement="Lane_0qy84oj" isHorizontal="true">
-        <dc:Bounds x="175" y="455" width="1159" height="170" />
+        <dc:Bounds x="175" y="455" width="1159" height="375" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1k8p04y_di" bpmnElement="Lane_1k8p04y" isHorizontal="true">
-        <dc:Bounds x="205" y="455" width="1129" height="170" />
+        <dc:Bounds x="205" y="455" width="1129" height="375" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1wowesz_di" bpmnElement="Lane_1wowesz" isHorizontal="true">
         <dc:Bounds x="175" y="285" width="1159" height="170" />
@@ -155,6 +182,30 @@
       <bpmndi:BPMNShape id="Activity_1l2x3t5_di" bpmnElement="PR_001_AS_UT_001">
         <dc:Bounds x="456" y="513" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vgrkge_di" bpmnElement="Activity_0inroeq">
+        <dc:Bounds x="216" y="670" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gspr3n_di" bpmnElement="Activity_1gckezp" isExpanded="true">
+        <dc:Bounds x="386" y="610" width="520" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0v8tppy_di" bpmnElement="Event_0v8tppy">
+        <dc:Bounds x="767" y="692" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0i12dlr_di" bpmnElement="Event_0i12dlr">
+        <dc:Bounds x="406.3333333333333" y="692" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0c0y53c_di" bpmnElement="Activity_1amqpod">
+        <dc:Bounds x="525" y="670" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1634skh_di" bpmnElement="Flow_1634skh">
+        <di:waypoint x="625" y="710" />
+        <di:waypoint x="767" y="710" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w9wcvu_di" bpmnElement="Flow_0w9wcvu">
+        <di:waypoint x="442" y="710" />
+        <di:waypoint x="525" y="710" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1h8d5eh_di" bpmnElement="Flow_1h8d5eh">
         <di:waypoint x="284" y="373" />
         <di:waypoint x="300" y="373" />
@@ -201,6 +252,16 @@
       <bpmndi:BPMNEdge id="Flow_0rhbqvg_di" bpmnElement="Flow_0rhbqvg">
         <di:waypoint x="556" y="553" />
         <di:waypoint x="596" y="553" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05dk7k1_di" bpmnElement="Flow_05dk7k1">
+        <di:waypoint x="316" y="710" />
+        <di:waypoint x="386" y="710" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15s7bf3_di" bpmnElement="Flow_15s7bf3">
+        <di:waypoint x="366" y="593" />
+        <di:waypoint x="366" y="632" />
+        <di:waypoint x="266" y="632" />
+        <di:waypoint x="266" y="670" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

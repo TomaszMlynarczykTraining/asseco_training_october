@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1gu51ys" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
   <bpmn:collaboration id="Proces_konserwacji">
-    <bpmn:participant id="Participant_15emr9k" name="Proces konserwacji" processRef="Process_0kq8kos" />
+    <bpmn:participant id="Participant_15emr9k" name="Proces konserwacji" processRef="Process_konserwacji" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_0kq8kos" isExecutable="true">
+  <bpmn:process id="Process_konserwacji" isExecutable="true">
     <bpmn:laneSet id="LaneSet_1uavf3w">
       <bpmn:lane id="Lane_00ds5xp" name="Planista">
         <bpmn:flowNodeRef>Event_1n3efrd</bpmn:flowNodeRef>
@@ -26,18 +26,18 @@
         </bpmn:childLaneSet>
       </bpmn:lane>
       <bpmn:lane id="Lane_0qy84oj" name="Pracownik serwisu">
-        <bpmn:flowNodeRef>PR_001_AS_UT_001</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>PR_001_AS_UT_002</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>PR_001_AS_UT_003</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>PR_001_AS_GTW_001</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>PR_001_AS_ST_001</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PR_001_AS_UT_001</bpmn:flowNodeRef>
         <bpmn:childLaneSet id="LaneSet_119b100">
           <bpmn:lane id="Lane_1k8p04y">
-            <bpmn:flowNodeRef>PR_001_AS_UT_001</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>PR_001_AS_UT_002</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>PR_001_AS_UT_003</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>PR_001_AS_GTW_001</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>PR_001_AS_ST_001</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>PR_001_AS_UT_001</bpmn:flowNodeRef>
           </bpmn:lane>
         </bpmn:childLaneSet>
       </bpmn:lane>
@@ -45,10 +45,6 @@
     <bpmn:startEvent id="PR_001_AS_Start" name="Otrzymanie awarii sprzętu">
       <bpmn:outgoing>Flow_1h8d5eh</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="PR_001_AS_UT_001" name="Utworzenie zlecenia alimentacyjnego">
-      <bpmn:incoming>Flow_1rodvez</bpmn:incoming>
-      <bpmn:outgoing>Flow_0rhbqvg</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:userTask id="PR_001_AS_UT_002" name="Przetworzenie zgłoszenia">
       <bpmn:incoming>Flow_0rhbqvg</bpmn:incoming>
       <bpmn:outgoing>Flow_1pc5y3s</bpmn:outgoing>
@@ -68,7 +64,6 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1h8d5eh" sourceRef="PR_001_AS_Start" targetRef="PR_001_AS_ST_001" />
     <bpmn:sequenceFlow id="Flow_1rodvez" sourceRef="PR_001_AS_ST_001" targetRef="PR_001_AS_UT_001" />
-    <bpmn:sequenceFlow id="Flow_0rhbqvg" sourceRef="PR_001_AS_UT_001" targetRef="PR_001_AS_UT_002" />
     <bpmn:sequenceFlow id="Flow_1pc5y3s" sourceRef="PR_001_AS_UT_002" targetRef="PR_001_AS_UT_003" />
     <bpmn:sequenceFlow id="PR_001_AS_Flow_001" name="Nie" sourceRef="PR_001_AS_GTW_001" targetRef="PR_001_AS_UT_003">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ocenaJakosci == 'false'}</bpmn:conditionExpression>
@@ -91,26 +86,17 @@
       <bpmn:incoming>Flow_1h8d5eh</bpmn:incoming>
       <bpmn:outgoing>Flow_1rodvez</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0rhbqvg" sourceRef="PR_001_AS_UT_001" targetRef="PR_001_AS_UT_002" />
+    <bpmn:callActivity id="PR_001_AS_UT_001" name="Utworzenie zlecenia alimentacyjnego" calledElement="Process_UZA">
+      <bpmn:incoming>Flow_1rodvez</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rhbqvg</bpmn:outgoing>
+    </bpmn:callActivity>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proces_konserwacji">
       <bpmndi:BPMNShape id="Participant_15emr9k_di" bpmnElement="Participant_15emr9k" isHorizontal="true">
         <dc:Bounds x="145" y="115" width="1189" height="510" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_00ds5xp_di" bpmnElement="Lane_00ds5xp" isHorizontal="true">
-        <dc:Bounds x="175" y="115" width="1159" height="170" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1h639cv_di" bpmnElement="Lane_1h639cv" isHorizontal="true">
-        <dc:Bounds x="205" y="115" width="1129" height="170" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1wowesz_di" bpmnElement="Lane_1wowesz" isHorizontal="true">
-        <dc:Bounds x="175" y="285" width="1159" height="170" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0dh0b7o_di" bpmnElement="Lane_0dh0b7o" isHorizontal="true">
-        <dc:Bounds x="205" y="285" width="1129" height="170" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0qy84oj_di" bpmnElement="Lane_0qy84oj" isHorizontal="true">
         <dc:Bounds x="175" y="455" width="1159" height="170" />
@@ -119,14 +105,25 @@
       <bpmndi:BPMNShape id="Lane_1k8p04y_di" bpmnElement="Lane_1k8p04y" isHorizontal="true">
         <dc:Bounds x="205" y="455" width="1129" height="170" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1wowesz_di" bpmnElement="Lane_1wowesz" isHorizontal="true">
+        <dc:Bounds x="175" y="285" width="1159" height="170" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0dh0b7o_di" bpmnElement="Lane_0dh0b7o" isHorizontal="true">
+        <dc:Bounds x="205" y="285" width="1129" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_00ds5xp_di" bpmnElement="Lane_00ds5xp" isHorizontal="true">
+        <dc:Bounds x="175" y="115" width="1159" height="170" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1h639cv_di" bpmnElement="Lane_1h639cv" isHorizontal="true">
+        <dc:Bounds x="205" y="115" width="1129" height="170" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="PR_001_AS_Start">
         <dc:Bounds x="248" y="355" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="225" y="398" width="89" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1b17tbn_di" bpmnElement="PR_001_AS_UT_001">
-        <dc:Bounds x="456" y="513" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_00y0kwa_di" bpmnElement="PR_001_AS_UT_002">
         <dc:Bounds x="596" y="513" width="100" height="80" />
@@ -151,6 +148,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ikymsy_di" bpmnElement="PR_001_AS_ST_001">
         <dc:Bounds x="316" y="513" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1l2x3t5_di" bpmnElement="PR_001_AS_UT_001">
+        <dc:Bounds x="456" y="513" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1h8d5eh_di" bpmnElement="Flow_1h8d5eh">
         <di:waypoint x="284" y="373" />

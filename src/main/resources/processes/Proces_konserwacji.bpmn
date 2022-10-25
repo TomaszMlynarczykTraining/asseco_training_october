@@ -87,7 +87,10 @@
       <bpmn:outgoing>Flow_1rodvez</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0rhbqvg" sourceRef="PR_001_AS_UT_001" targetRef="PR_001_AS_UT_002" />
-    <bpmn:callActivity id="PR_001_AS_UT_001" name="Utworzenie zlecenia alimentacyjnego" calledElement="Process_UZA">
+    <bpmn:callActivity id="PR_001_AS_UT_001" name="Utworzenie zlecenia alimentacyjnego" calledElement="Process_UZA" camunda:variableMappingDelegateExpression="${procesKonserwacjiVariablesMapper}">
+      <bpmn:extensionElements>
+        <camunda:in businessKey="#{execution.processBusinessKey}" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1rodvez</bpmn:incoming>
       <bpmn:outgoing>Flow_0rhbqvg</bpmn:outgoing>
     </bpmn:callActivity>
@@ -162,10 +165,6 @@
         <di:waypoint x="416" y="553" />
         <di:waypoint x="456" y="553" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0rhbqvg_di" bpmnElement="Flow_0rhbqvg">
-        <di:waypoint x="556" y="553" />
-        <di:waypoint x="596" y="553" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1pc5y3s_di" bpmnElement="Flow_1pc5y3s">
         <di:waypoint x="696" y="553" />
         <di:waypoint x="736" y="553" />
@@ -198,6 +197,10 @@
       <bpmndi:BPMNEdge id="Flow_1vexp0m_di" bpmnElement="Flow_1vexp0m">
         <di:waypoint x="1066" y="193" />
         <di:waypoint x="1128" y="193" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rhbqvg_di" bpmnElement="Flow_0rhbqvg">
+        <di:waypoint x="556" y="553" />
+        <di:waypoint x="596" y="553" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

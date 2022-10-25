@@ -1,11 +1,13 @@
 package com.example.workflow.mvc.mappers;
 
 
+import org.camunda.bpm.dmn.engine.DmnEngine;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.DelegateVariableMapping;
 import org.camunda.bpm.engine.delegate.VariableScope;
 import org.camunda.bpm.engine.impl.javax.el.VariableMapper;
 import org.camunda.bpm.engine.variable.VariableMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import static com.example.workflow.mvc.processes.EmailSenderProcess.EMAIL_ADDRESS_VARIABLE;
@@ -13,10 +15,14 @@ import static com.example.workflow.mvc.processes.EmailSenderProcess.EMAIL_ADDRES
 @Component
 public class EmailSenderVariablesMapper implements DelegateVariableMapping {
 
+
     @Override
     public void mapInputVariables(DelegateExecution delegateExecution, VariableMap variableMap) {
         String emailAddressVariable = (String)delegateExecution.getVariable(EMAIL_ADDRESS_VARIABLE);
         variableMap.put(EMAIL_ADDRESS_VARIABLE, emailAddressVariable);
+        //DmnEngine dmnEngine = new DmnEngine();
+        //dmnEngine.evaluateDecision()
+
 
     }
 

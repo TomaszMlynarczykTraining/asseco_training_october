@@ -4,7 +4,7 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_06z6nsa</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_06z6nsa" sourceRef="StartEvent_1" targetRef="Activity_0qzmaka" />
+    <bpmn:sequenceFlow id="Flow_06z6nsa" sourceRef="StartEvent_1" targetRef="Activity_1ax3gl1" />
     <bpmn:endEvent id="Event_1ifhz6h">
       <bpmn:incoming>Flow_1quj1jk</bpmn:incoming>
     </bpmn:endEvent>
@@ -21,43 +21,56 @@
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_05odw7l" sourceRef="Activity_0qzmaka" targetRef="Activity_1v00f81" />
     <bpmn:serviceTask id="Activity_0qzmaka" name="Get all clients list" camunda:delegateExpression="${getAllRecipientsDelegate}">
-      <bpmn:incoming>Flow_06z6nsa</bpmn:incoming>
+      <bpmn:incoming>Flow_12opn0v</bpmn:incoming>
       <bpmn:outgoing>Flow_05odw7l</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_12opn0v" sourceRef="Activity_1ax3gl1" targetRef="Activity_0qzmaka" />
+    <bpmn:businessRuleTask id="Activity_1ax3gl1" name="Get offer status" camunda:resultVariable="result" camunda:decisionRef="Decision_1p78bvz" camunda:mapDecisionResult="singleEntry">
+      <bpmn:incoming>Flow_06z6nsa</bpmn:incoming>
+      <bpmn:outgoing>Flow_12opn0v</bpmn:outgoing>
+    </bpmn:businessRuleTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_011rm9r">
       <bpmndi:BPMNShape id="Event_1ifhz6h_di" bpmnElement="Event_1ifhz6h">
-        <dc:Bounds x="842" y="99" width="36" height="36" />
+        <dc:Bounds x="1042" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_16e5xje_di" bpmnElement="Activity_1p9ah0i">
-        <dc:Bounds x="650" y="77" width="100" height="80" />
+        <dc:Bounds x="850" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0dk7s6e_di" bpmnElement="Activity_1v00f81">
-        <dc:Bounds x="470" y="77" width="100" height="80" />
+        <dc:Bounds x="670" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vm1qlx_di" bpmnElement="Activity_0qzmaka">
+        <dc:Bounds x="480" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="152" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1vm1qlx_di" bpmnElement="Activity_0qzmaka">
-        <dc:Bounds x="280" y="77" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1gggsex_di" bpmnElement="Activity_1ax3gl1">
+        <dc:Bounds x="250" y="77" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1quj1jk_di" bpmnElement="Flow_1quj1jk">
-        <di:waypoint x="750" y="117" />
-        <di:waypoint x="842" y="117" />
+        <di:waypoint x="950" y="117" />
+        <di:waypoint x="1042" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02hf9ws_di" bpmnElement="Flow_02hf9ws">
-        <di:waypoint x="570" y="117" />
-        <di:waypoint x="650" y="117" />
+        <di:waypoint x="770" y="117" />
+        <di:waypoint x="850" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05odw7l_di" bpmnElement="Flow_05odw7l">
+        <di:waypoint x="580" y="117" />
+        <di:waypoint x="670" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12opn0v_di" bpmnElement="Flow_12opn0v">
+        <di:waypoint x="350" y="117" />
+        <di:waypoint x="480" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_06z6nsa_di" bpmnElement="Flow_06z6nsa">
         <di:waypoint x="188" y="117" />
-        <di:waypoint x="280" y="117" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_05odw7l_di" bpmnElement="Flow_05odw7l">
-        <di:waypoint x="380" y="117" />
-        <di:waypoint x="470" y="117" />
+        <di:waypoint x="250" y="117" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

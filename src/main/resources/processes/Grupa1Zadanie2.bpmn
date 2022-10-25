@@ -116,10 +116,8 @@
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1qjiqjm" sourceRef="Activity_0xe5x5b" targetRef="Activity_122vohj" />
     <bpmn:sequenceFlow id="Flow_1indlio" sourceRef="Activity_122vohj" targetRef="Gateway_110dbld" />
-    <bpmn:callActivity id="Activity_122vohj" name="Weryfikuj fakture" calledElement="Grupa1Zadanie2sub">
-      <bpmn:extensionElements>
-        <camunda:out variables="all" />
-      </bpmn:extensionElements>
+    <bpmn:callActivity id="Activity_122vohj" name="Weryfikuj fakture" calledElement="Grupa1Zadanie2sub" camunda:variableMappingDelegateExpression="${invoiceVariableMapper}">
+      <bpmn:extensionElements />
       <bpmn:incoming>Flow_1qjiqjm</bpmn:incoming>
       <bpmn:outgoing>Flow_1indlio</bpmn:outgoing>
     </bpmn:callActivity>

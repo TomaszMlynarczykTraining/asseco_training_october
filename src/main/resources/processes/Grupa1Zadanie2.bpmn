@@ -33,6 +33,7 @@
         <bpmn:flowNodeRef>Activity_0muxouw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0pgo0va</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0s2njrv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1eo54bh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0xe5x5b</bpmn:flowNodeRef>
         <bpmn:childLaneSet id="LaneSet_0citc3b">
           <bpmn:lane id="Lane_0lh377x">
@@ -42,6 +43,7 @@
             <bpmn:flowNodeRef>Activity_0muxouw</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Event_0pgo0va</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Event_0s2njrv</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Activity_1eo54bh</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Activity_0xe5x5b</bpmn:flowNodeRef>
           </bpmn:lane>
         </bpmn:childLaneSet>
@@ -110,16 +112,22 @@
     <bpmn:endEvent id="Event_0s2njrv" name="Koniec - Dane niezgodne">
       <bpmn:incoming>Flow_0n4d6ru</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1qjiqjm" sourceRef="Activity_0xe5x5b" targetRef="Activity_1eo54bh" />
+    <bpmn:sequenceFlow id="Flow_1indlio" sourceRef="Activity_122vohj" targetRef="Gateway_110dbld" />
+    <bpmn:sequenceFlow id="Flow_1fa2mmh" sourceRef="Activity_1eo54bh" targetRef="Activity_122vohj" />
+    <bpmn:serviceTask id="Activity_1eo54bh" name="Pobierz listę weryfikatorów" camunda:delegateExpression="${getInvoiceVerifierDelegate}">
+      <bpmn:incoming>Flow_1qjiqjm</bpmn:incoming>
+      <bpmn:outgoing>Flow_1fa2mmh</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_0xe5x5b" name="Wygeneruj fakturę" camunda:delegateExpression="${mockDelegate}">
       <bpmn:incoming>Flow_028uym7</bpmn:incoming>
       <bpmn:outgoing>Flow_1qjiqjm</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_1qjiqjm" sourceRef="Activity_0xe5x5b" targetRef="Activity_122vohj" />
-    <bpmn:sequenceFlow id="Flow_1indlio" sourceRef="Activity_122vohj" targetRef="Gateway_110dbld" />
     <bpmn:callActivity id="Activity_122vohj" name="Weryfikuj fakture" calledElement="Grupa1Zadanie2sub" camunda:variableMappingDelegateExpression="${invoiceVariableMapper}">
       <bpmn:extensionElements />
-      <bpmn:incoming>Flow_1qjiqjm</bpmn:incoming>
+      <bpmn:incoming>Flow_1fa2mmh</bpmn:incoming>
       <bpmn:outgoing>Flow_1indlio</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics camunda:collection="userList" camunda:elementVariable="userName" />
     </bpmn:callActivity>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -200,12 +208,16 @@
           <dc:Bounds x="737" y="295" width="87" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0osft5q_di" bpmnElement="Activity_1eo54bh">
+        <dc:Bounds x="830" y="410" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1m1mh8d_di" bpmnElement="Activity_0xe5x5b">
-        <dc:Bounds x="730" y="410" width="100" height="80" />
+        <dc:Bounds x="680" y="410" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_07c7kxm_di" bpmnElement="Activity_122vohj">
-        <dc:Bounds x="730" y="590" width="100" height="80" />
+        <dc:Bounds x="830" y="590" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1sfm54x_di" bpmnElement="Flow_1sfm54x">
@@ -223,9 +235,8 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_028uym7_di" bpmnElement="Flow_028uym7">
         <di:waypoint x="655" y="360" />
-        <di:waypoint x="688" y="360" />
-        <di:waypoint x="688" y="450" />
-        <di:waypoint x="730" y="450" />
+        <di:waypoint x="730" y="360" />
+        <di:waypoint x="730" y="410" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0n4d6ru_di" bpmnElement="Flow_0n4d6ru">
         <di:waypoint x="630" y="335" />
@@ -252,12 +263,16 @@
         <di:waypoint x="350" y="790" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1qjiqjm_di" bpmnElement="Flow_1qjiqjm">
-        <di:waypoint x="780" y="490" />
-        <di:waypoint x="780" y="590" />
+        <di:waypoint x="780" y="450" />
+        <di:waypoint x="830" y="450" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1indlio_di" bpmnElement="Flow_1indlio">
-        <di:waypoint x="830" y="630" />
+        <di:waypoint x="930" y="630" />
         <di:waypoint x="1005" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fa2mmh_di" bpmnElement="Flow_1fa2mmh">
+        <di:waypoint x="880" y="490" />
+        <di:waypoint x="880" y="590" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -135,7 +135,7 @@
     </bpmn:businessRuleTask>
     <bpmn:sequenceFlow id="Flow_04be25c" sourceRef="PR_001_AS_Start" targetRef="Activity_19sofbg" />
     <bpmn:sequenceFlow id="Flow_0100aza" sourceRef="Activity_19sofbg" targetRef="Activity_0ro0ccv" />
-    <bpmn:userTask id="Activity_19sofbg" name="Set current date">
+    <bpmn:userTask id="Activity_19sofbg" name="Set current date" camunda:dueDate="${someDate}">
       <bpmn:extensionElements>
         <camunda:executionListener delegateExpression="${setDateTaskListener}" event="start" />
       </bpmn:extensionElements>

@@ -3,7 +3,7 @@
   <bpmn:process id="Grupa1Zadanie2sub" name="Weryfikuj fakture" isExecutable="true">
     <bpmn:userTask id="Activity_0macbeh" name="Weryfikuj fakturę">
       <bpmn:extensionElements>
-        <camunda:executionListener delegateExpression="${g1StartInvoiceVerify}" event="start" />
+        <camunda:taskListener delegateExpression="${g1StartInvoiceVerify}" event="create" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1uwdxsn</bpmn:incoming>
       <bpmn:outgoing>Flow_0zrtf8h</bpmn:outgoing>

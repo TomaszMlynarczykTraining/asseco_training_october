@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_1yl4ip3" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <decision id="Decision_1yy1adi" name="Decision 1">
+    <decisionTable id="DecisionTable_0t0lboj" hitPolicy="FIRST">
+      <input id="Input_1" label="Nadgodziny" biodi:width="156">
+        <inputExpression id="InputExpression_1" typeRef="integer">
+          <text>additionalHours</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0qcrwb4" label="Data złożenia">
+        <inputExpression id="LiteralExpression_0wd0me0" typeRef="integer">
+          <text>dayOfMonth</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Status" typeRef="string" />
+      <rule id="DecisionRule_1pv6cv5">
+        <inputEntry id="UnaryTests_1blsp9l">
+          <text>&gt;30</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_12r6b65">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_137ssyd">
+          <text>"rejested"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1g7870a">
+        <inputEntry id="UnaryTests_1b67p1h">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0799z1t">
+          <text>in (29, 30, 31)</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1fs2yui">
+          <text>"rejested"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0h3qbh4">
+        <inputEntry id="UnaryTests_1ru2m3s">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06oimez">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1kaxnu6">
+          <text>"accepted"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1yy1adi">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

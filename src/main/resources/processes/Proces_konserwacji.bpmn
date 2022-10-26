@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1gu51ys" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
-  <bpmn:collaboration id="PR_001_AS_UT_006">
+  <bpmn:collaboration id="unique_id">
     <bpmn:participant id="Participant_15emr9k" name="Proces konserwacji" processRef="Process_konserwacji" />
   </bpmn:collaboration>
   <bpmn:process id="Process_konserwacji" isExecutable="true">
@@ -22,12 +22,16 @@
         <bpmn:flowNodeRef>Activity_1ofyoct</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_19sofbg</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0ro0ccv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_13pn4yw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0fzgodd</bpmn:flowNodeRef>
         <bpmn:childLaneSet id="LaneSet_1730okg">
           <bpmn:lane id="Lane_0dh0b7o">
             <bpmn:flowNodeRef>PR_001_AS_Start</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Activity_1ofyoct</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Activity_19sofbg</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Activity_0ro0ccv</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Event_13pn4yw</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Event_0fzgodd</bpmn:flowNodeRef>
           </bpmn:lane>
         </bpmn:childLaneSet>
       </bpmn:lane>
@@ -146,9 +150,19 @@
       <bpmn:incoming>Flow_0100aza</bpmn:incoming>
       <bpmn:outgoing>Flow_14dc8i0</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Event_13pn4yw" attachedToRef="Activity_19sofbg">
+      <bpmn:outgoing>Flow_1f9wftb</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_13l0pvk">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1f9wftb" sourceRef="Event_13pn4yw" targetRef="Event_0fzgodd" />
+    <bpmn:endEvent id="Event_0fzgodd">
+      <bpmn:incoming>Flow_1f9wftb</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="PR_001_AS_UT_006">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="unique_id">
       <bpmndi:BPMNShape id="Participant_15emr9k_di" bpmnElement="Participant_15emr9k" isHorizontal="true">
         <dc:Bounds x="145" y="115" width="1189" height="715" />
         <bpmndi:BPMNLabel />
@@ -205,17 +219,8 @@
         <dc:Bounds x="216" y="670" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0jk2wug_di" bpmnElement="Activity_1ofyoct">
-        <dc:Bounds x="690" y="350" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_05bgmjk_di" bpmnElement="Activity_19sofbg">
-        <dc:Bounds x="330" y="350" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1osxikg" bpmnElement="Activity_0ro0ccv">
-        <dc:Bounds x="500" y="350" width="100" height="80" />
-        <bpmndi:BPMNLabel />
+      <bpmndi:BPMNShape id="Event_0fzgodd_di" bpmnElement="Event_0fzgodd">
+        <dc:Bounds x="552" y="302" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0gspr3n_di" bpmnElement="Activity_1gckezp" isExpanded="true">
         <dc:Bounds x="386" y="610" width="520" height="200" />
@@ -242,6 +247,21 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="209" y="415" width="89" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0jk2wug_di" bpmnElement="Activity_1ofyoct">
+        <dc:Bounds x="690" y="350" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05bgmjk_di" bpmnElement="Activity_19sofbg">
+        <dc:Bounds x="330" y="350" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1osxikg" bpmnElement="Activity_0ro0ccv">
+        <dc:Bounds x="500" y="350" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1yzf4sw_di" bpmnElement="Event_13pn4yw">
+        <dc:Bounds x="412" y="332" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1rodvez_di" bpmnElement="Flow_1rodvez">
         <di:waypoint x="416" y="553" />
@@ -311,6 +331,11 @@
       <bpmndi:BPMNEdge id="Flow_0100aza_di" bpmnElement="Flow_0100aza">
         <di:waypoint x="430" y="390" />
         <di:waypoint x="500" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1f9wftb_di" bpmnElement="Flow_1f9wftb">
+        <di:waypoint x="430" y="332" />
+        <di:waypoint x="430" y="320" />
+        <di:waypoint x="552" y="320" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

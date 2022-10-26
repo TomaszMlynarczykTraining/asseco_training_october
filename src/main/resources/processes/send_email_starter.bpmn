@@ -33,7 +33,10 @@
       <bpmn:outgoing>Flow_19lb2it</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_0w3zybs" sourceRef="Activity_1i1c4qa" targetRef="Activity_10j3nhr" />
-    <bpmn:userTask id="Activity_1i1c4qa" name="A">
+    <bpmn:userTask id="Activity_1i1c4qa" name="Prepare mail">
+      <bpmn:extensionElements>
+        <camunda:executionListener delegateExpression="${startTaskListener}" event="start" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0631rdy</bpmn:incoming>
       <bpmn:outgoing>Flow_0w3zybs</bpmn:outgoing>
     </bpmn:userTask>
@@ -45,54 +48,54 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0wmcdmo">
       <bpmndi:BPMNShape id="TextAnnotation_1ptnv2r_di" bpmnElement="TextAnnotation_1ptnv2r">
-        <dc:Bounds x="340" y="80" width="100" height="55" />
+        <dc:Bounds x="390" y="80" width="100" height="55" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1fnxdmt_di" bpmnElement="Process_011rm9">
-        <dc:Bounds x="530" y="197" width="100" height="80" />
+        <dc:Bounds x="580" y="197" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_09mh6cj_di" bpmnElement="Event_09mh6cj">
-        <dc:Bounds x="872" y="219" width="36" height="36" />
+        <dc:Bounds x="922" y="219" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0vudabh_di" bpmnElement="Activity_1mr0tjp">
-        <dc:Bounds x="710" y="197" width="100" height="80" />
+        <dc:Bounds x="760" y="197" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0sokdy3_di" bpmnElement="Activity_10j3nhr">
-        <dc:Bounds x="380" y="197" width="100" height="80" />
+        <dc:Bounds x="430" y="197" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1q2fz8x_di" bpmnElement="Activity_1i1c4qa">
+        <dc:Bounds x="270" y="197" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="152" y="219" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1q2fz8x_di" bpmnElement="Activity_1i1c4qa">
-        <dc:Bounds x="220" y="197" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_15hnb71_di" bpmnElement="Association_15hnb71">
-        <di:waypoint x="419" y="197" />
-        <di:waypoint x="401" y="135" />
+        <di:waypoint x="469" y="197" />
+        <di:waypoint x="451" y="135" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_19lb2it_di" bpmnElement="Flow_19lb2it">
-        <di:waypoint x="480" y="237" />
         <di:waypoint x="530" y="237" />
+        <di:waypoint x="580" y="237" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1tdc7lw_di" bpmnElement="Flow_1tdc7lw">
-        <di:waypoint x="630" y="237" />
-        <di:waypoint x="710" y="237" />
+        <di:waypoint x="680" y="237" />
+        <di:waypoint x="760" y="237" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1rbb4q7_di" bpmnElement="Flow_1rbb4q7">
-        <di:waypoint x="810" y="237" />
-        <di:waypoint x="872" y="237" />
+        <di:waypoint x="860" y="237" />
+        <di:waypoint x="922" y="237" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0w3zybs_di" bpmnElement="Flow_0w3zybs">
-        <di:waypoint x="320" y="237" />
-        <di:waypoint x="380" y="237" />
+        <di:waypoint x="370" y="237" />
+        <di:waypoint x="430" y="237" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0631rdy_di" bpmnElement="Flow_0631rdy">
         <di:waypoint x="188" y="237" />
-        <di:waypoint x="220" y="237" />
+        <di:waypoint x="270" y="237" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

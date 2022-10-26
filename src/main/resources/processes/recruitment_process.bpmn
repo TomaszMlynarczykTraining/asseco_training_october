@@ -4,6 +4,7 @@
     <bpmn:extensionElements>
       <camunda:properties>
         <camunda:property />
+        <camunda:property />
       </camunda:properties>
     </bpmn:extensionElements>
     <bpmn:participant id="Participant_1iuk887" name="Recruitment process" processRef="Recruitment_process" />
@@ -154,6 +155,9 @@
     <bpmn:sequenceFlow id="Flow_1ygfp7q" sourceRef="Activity_07obdov" targetRef="Gateway_1oqghv0" />
     <bpmn:sequenceFlow id="Flow_1vk8xnu" sourceRef="Activity_0rq158q" targetRef="Activity_09ej420" />
     <bpmn:userTask id="Activity_09ej420" name="create offer">
+      <bpmn:extensionElements>
+        <camunda:executionListener delegateExpression="${recruitmentProcessStartTaskListener}" event="start" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1vk8xnu</bpmn:incoming>
       <bpmn:outgoing>Flow_0h8xuww</bpmn:outgoing>
     </bpmn:userTask>
@@ -226,14 +230,6 @@
         <dc:Bounds x="230" y="390" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1jgaggn_di" bpmnElement="Activity_09ej420">
-        <dc:Bounds x="230" y="230" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_12m045v_di" bpmnElement="Activity_0rq158q">
-        <dc:Bounds x="230" y="130" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_07obdov_di" bpmnElement="Activity_07obdov" isExpanded="true">
         <dc:Bounds x="370" y="100" width="520" height="200" />
       </bpmndi:BPMNShape>
@@ -256,6 +252,14 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_13mplcj_di" bpmnElement="Activity_1axv7j1">
         <dc:Bounds x="370" y="380" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1jgaggn_di" bpmnElement="Activity_09ej420">
+        <dc:Bounds x="230" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_12m045v_di" bpmnElement="Activity_0rq158q">
+        <dc:Bounds x="230" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_02tbv18_di" bpmnElement="Flow_02tbv18">
         <di:waypoint x="280" y="82" />

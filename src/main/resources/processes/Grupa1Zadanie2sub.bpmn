@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1lmai51" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1lmai51" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
   <bpmn:process id="Grupa1Zadanie2sub" name="Weryfikuj fakture" isExecutable="true">
     <bpmn:userTask id="Activity_0macbeh" name="Weryfikuj fakturę">
+      <bpmn:extensionElements>
+        <camunda:executionListener delegateExpression="${g1StartInvoiceVerify}" event="start" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1uwdxsn</bpmn:incoming>
       <bpmn:outgoing>Flow_0zrtf8h</bpmn:outgoing>
     </bpmn:userTask>
@@ -16,14 +19,14 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Grupa1Zadanie2sub">
-      <bpmndi:BPMNShape id="Event_15n0js1_di" bpmnElement="Event_15n0js1">
-        <dc:Bounds x="160" y="102" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1dej4aw_di" bpmnElement="Activity_0macbeh">
         <dc:Bounds x="250" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1pjeljv_di" bpmnElement="Event_1pjeljv">
         <dc:Bounds x="412" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_15n0js1_di" bpmnElement="Event_15n0js1">
+        <dc:Bounds x="160" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1uwdxsn_di" bpmnElement="Flow_1uwdxsn">
         <di:waypoint x="196" y="120" />

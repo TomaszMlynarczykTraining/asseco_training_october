@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_0c4559k" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.11.1">
+  <decision id="Decision_invoicePriority" name="Invoice Priority">
+    <decisionTable id="DecisionTable_1xavsmk" hitPolicy="FIRST">
+      <input id="Input_1" camunda:inputVariable="amount">
+        <inputExpression id="InputExpression_1" typeRef="double">
+          <text>amount</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0qn6tmj" camunda:inputVariable="invoiceDate">
+        <inputExpression id="LiteralExpression_1tdy4qy" typeRef="date">
+          <text>invoiceDate</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="invoicePriority" typeRef="string" />
+      <rule id="DecisionRule_10ot18l">
+        <inputEntry id="UnaryTests_0eplbr8">
+          <text>&gt; 5000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vf48nr">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_157xdch">
+          <text>"HIGH"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_016rej5">
+        <inputEntry id="UnaryTests_01rh9y9">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0827f2k">
+          <text>date(now()) &gt; date(duration("P10D") + invoiceDate)</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0wkd7jk">
+          <text>"HIGH"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1762usu">
+        <inputEntry id="UnaryTests_0fd3ro6">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14868cp">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mti9n0">
+          <text>"LOW"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_invoicePriority">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

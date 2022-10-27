@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_1jl4gcv" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <decision id="GR02_PR_001_TIMESHEET_DMN" name="Automatyczna o&#10;cena wniosku">
+    <decisionTable id="decisionTable_1" hitPolicy="FIRST">
+      <input id="input_1" label="over_hours_count" camunda:inputVariable="over_hours_count">
+        <inputExpression id="inputExpression_1" typeRef="integer">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0mbkuua" label="form_date" camunda:inputVariable="form_date">
+        <inputExpression id="LiteralExpression_0txrok6" typeRef="date">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="dmn_result" name="dmn_result " typeRef="string" />
+      <rule id="DecisionRule_1vj2tz7">
+        <inputEntry id="UnaryTests_0ce8l10">
+          <text>&gt;20</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0lt74gl">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pcsifo">
+          <text>"rejected"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1d9jabf">
+        <inputEntry id="UnaryTests_0mvfaka">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_148xmp0">
+          <text>list contains([29,30,31], form_date.day)</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0rvb919">
+          <text>"rejected"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0q04hmo">
+        <inputEntry id="UnaryTests_0ln7oef">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1cu5ajj">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0caqhds">
+          <text>"accepted"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_1uz950f">
+      <dmndi:DMNShape id="DMNShape_1mlhlpc" dmnElementRef="GR02_PR_001_TIMESHEET_DMN">
+        <dc:Bounds height="80" width="180" x="150" y="75" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

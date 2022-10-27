@@ -11,5 +11,6 @@ public class StartTaskListener implements ExecutionListener {
     @Override
     public void notify(DelegateExecution delegateExecution) throws Exception {
         System.out.println(delegateExecution.getCurrentActivityId());
+
     }
 }

@@ -13,6 +13,8 @@ public class RecruitmentProcessStartTaskListener implements ExecutionListener {
 
     @Override
     public void notify(DelegateExecution delegateExecution) throws Exception {
+        //mozna to zrobic na sposoby
+        //1 - przekazanie zmiennej, 2 - skorzystac z odpowiedniej klasy
         String processId = delegateExecution.getProcessInstance().getProcessInstanceId();
         List<Task> taskList = delegateExecution.getProcessEngineServices().getTaskService().createTaskQuery()
                 .processInstanceId(processId).list();

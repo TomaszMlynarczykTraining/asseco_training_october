@@ -16,20 +16,22 @@
         </bpmn:childLaneSet>
       </bpmn:lane>
       <bpmn:lane id="Lane_12rntov" name="System">
-        <bpmn:flowNodeRef>LP_010_START</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>LP_020</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LP_050</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LP_060</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0cn1h45</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LP_120</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LP_020</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LP_010_START</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LP_010</bpmn:flowNodeRef>
         <bpmn:childLaneSet id="LaneSet_1tzy279">
           <bpmn:lane id="Lane_1qa2r4h">
-            <bpmn:flowNodeRef>LP_010_START</bpmn:flowNodeRef>
-            <bpmn:flowNodeRef>LP_020</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>LP_050</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>LP_060</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Event_0cn1h45</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>LP_120</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LP_020</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LP_010_START</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LP_010</bpmn:flowNodeRef>
           </bpmn:lane>
         </bpmn:childLaneSet>
       </bpmn:lane>
@@ -50,38 +52,6 @@
         </bpmn:childLaneSet>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:manualTask id="LP_080" name="LP_080 Long term process">
-      <bpmn:incoming>Flow_0fo4ekc</bpmn:incoming>
-      <bpmn:outgoing>Flow_0sgj1kl</bpmn:outgoing>
-    </bpmn:manualTask>
-    <bpmn:manualTask id="LP_090" name="LP_090 Short term process">
-      <bpmn:incoming>Flow_0g4ygq3</bpmn:incoming>
-      <bpmn:outgoing>Flow_0rep1vh</bpmn:outgoing>
-    </bpmn:manualTask>
-    <bpmn:manualTask id="LP_100" name="LP_100 House loan process">
-      <bpmn:incoming>Flow_0ikbtrh</bpmn:incoming>
-      <bpmn:outgoing>Flow_0odcogm</bpmn:outgoing>
-    </bpmn:manualTask>
-    <bpmn:exclusiveGateway id="LP_070" name="LP_070 Which loan option">
-      <bpmn:incoming>Flow_0tlmapd</bpmn:incoming>
-      <bpmn:outgoing>Flow_0g4ygq3</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0ikbtrh</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0fo4ekc</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:exclusiveGateway id="LP_110" name="LP_100" default="Flow_0mr7vt7">
-      <bpmn:incoming>Flow_0rep1vh</bpmn:incoming>
-      <bpmn:incoming>Flow_0sgj1kl</bpmn:incoming>
-      <bpmn:incoming>Flow_0odcogm</bpmn:incoming>
-      <bpmn:outgoing>Flow_0mr7vt7</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:startEvent id="LP_010_START" name="Start Loan Process">
-      <bpmn:outgoing>Flow_1c2ny42</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:exclusiveGateway id="LP_020" name="LP_020" default="Flow_1ozqosb">
-      <bpmn:incoming>Flow_1c2ny42</bpmn:incoming>
-      <bpmn:incoming>Flow_1y91kjd</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ozqosb</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="LP_050" name="LP_050 Validate user data" camunda:delegateExpression="${loanProcessValidateCustomerDataDelegate}">
       <bpmn:incoming>Flow_0lwgpw6</bpmn:incoming>
       <bpmn:outgoing>Flow_0nco5sd</bpmn:outgoing>
@@ -108,15 +78,15 @@
       <bpmn:outgoing>Flow_0lwgpw6</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_0fo4ekc" sourceRef="LP_070" targetRef="LP_080">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${loanProcessType=='LONG'}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isLongLoanTerm}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0sgj1kl" sourceRef="LP_080" targetRef="LP_110" />
     <bpmn:sequenceFlow id="Flow_0g4ygq3" sourceRef="LP_070" targetRef="LP_090">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${loanProcessType=='SHORT'}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isShortLoanTerm}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0rep1vh" sourceRef="LP_090" targetRef="LP_110" />
     <bpmn:sequenceFlow id="Flow_0ikbtrh" sourceRef="LP_070" targetRef="LP_100">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${loanProcessType=='HOUSE'}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isHouseLoanTerm}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0odcogm" sourceRef="LP_100" targetRef="LP_110" />
     <bpmn:sequenceFlow id="Flow_0tlmapd" name="Yes" sourceRef="LP_060" targetRef="LP_070">
@@ -132,7 +102,55 @@
     <bpmn:sequenceFlow id="Flow_0nco5sd" sourceRef="LP_050" targetRef="LP_060" />
     <bpmn:sequenceFlow id="Flow_012yfgh" sourceRef="LP_120" targetRef="Event_0cn1h45" />
     <bpmn:sequenceFlow id="Flow_1ixrfdy" sourceRef="LP_030" targetRef="LP_040" />
+    <bpmn:sequenceFlow id="Flow_061i855" name="LP_010" sourceRef="LP_010" targetRef="LP_020" />
+    <bpmn:callActivity id="LP_080" name="LP_080 Long term process" calledElement="LongTermLoanProcess">
+      <bpmn:extensionElements>
+        <camunda:in source="customerID" target="clientId" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0fo4ekc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0sgj1kl</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:callActivity id="LP_090" name="LP_090 Short term process" calledElement="ShortTermLoanProcess">
+      <bpmn:extensionElements>
+        <camunda:in source="customerID" target="clientId" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0g4ygq3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rep1vh</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:callActivity id="LP_100" name="LP_100 House loan process" calledElement="Process_houseLoan">
+      <bpmn:extensionElements>
+        <camunda:in source="customerID" target="clientId" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ikbtrh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0odcogm</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:inclusiveGateway id="LP_070" name="LP_070 Which loan option">
+      <bpmn:incoming>Flow_0tlmapd</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fo4ekc</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0g4ygq3</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0ikbtrh</bpmn:outgoing>
+    </bpmn:inclusiveGateway>
+    <bpmn:inclusiveGateway id="LP_110" name="LP_100" default="Flow_0mr7vt7">
+      <bpmn:incoming>Flow_0odcogm</bpmn:incoming>
+      <bpmn:incoming>Flow_0rep1vh</bpmn:incoming>
+      <bpmn:incoming>Flow_0sgj1kl</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mr7vt7</bpmn:outgoing>
+    </bpmn:inclusiveGateway>
+    <bpmn:exclusiveGateway id="LP_020" name="LP_020" default="Flow_1ozqosb">
+      <bpmn:incoming>Flow_1c2ny42</bpmn:incoming>
+      <bpmn:incoming>Flow_1y91kjd</bpmn:incoming>
+      <bpmn:incoming>Flow_061i855</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ozqosb</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:startEvent id="LP_010_START" name="Start Loan Process">
+      <bpmn:outgoing>Flow_1c2ny42</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:startEvent id="LP_010" name="Start Loan Process Signal">
+      <bpmn:outgoing>Flow_061i855</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_0g2fx9x" signalRef="Signal_20agvfu" />
+    </bpmn:startEvent>
   </bpmn:process>
+  <bpmn:signal id="Signal_20agvfu" name="StartLoanProcessSignal" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1mcr9q1">
       <bpmndi:BPMNShape id="Participant_1fgr6xj_di" bpmnElement="Participant_1fgr6xj" isHorizontal="true">
@@ -158,42 +176,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1hlivxz_di" bpmnElement="Lane_1hlivxz" isHorizontal="true">
         <dc:Bounds x="212" y="80" width="1288" height="160" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1ikw3dz_di" bpmnElement="LP_080">
-        <dc:Bounds x="1030" y="540" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1t4xivr_di" bpmnElement="LP_090">
-        <dc:Bounds x="1030" y="640" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_005vopx_di" bpmnElement="LP_100">
-        <dc:Bounds x="1030" y="740" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1q0zmoq_di" bpmnElement="LP_070" isMarkerVisible="true">
-        <dc:Bounds x="905" y="655" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="844" y="706" width="72" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1dzux1y_di" bpmnElement="LP_110" isMarkerVisible="true">
-        <dc:Bounds x="1215" y="655" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1271" y="703" width="38" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="LP_010_START">
-        <dc:Bounds x="262" y="382" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="255" y="425" width="51" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0agsks4_di" bpmnElement="LP_020" isMarkerVisible="true">
-        <dc:Bounds x="325" y="375" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="411" y="390" width="38" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1q5mwjf_di" bpmnElement="LP_050">
         <dc:Bounds x="690" y="360" width="100" height="80" />
@@ -222,6 +204,45 @@
       <bpmndi:BPMNShape id="Activity_00g8qa3_di" bpmnElement="LP_040">
         <dc:Bounds x="530" y="110" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pydqep_di" bpmnElement="LP_080">
+        <dc:Bounds x="1030" y="540" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ez2che_di" bpmnElement="LP_090">
+        <dc:Bounds x="1030" y="640" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cf87h7_di" bpmnElement="LP_100">
+        <dc:Bounds x="1030" y="740" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_04s1puf_di" bpmnElement="LP_070">
+        <dc:Bounds x="905" y="655" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="844" y="706" width="72" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0ax1eux_di" bpmnElement="LP_110">
+        <dc:Bounds x="1215" y="655" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1271" y="703" width="38" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0agsks4_di" bpmnElement="LP_020" isMarkerVisible="true">
+        <dc:Bounds x="325" y="325" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="277" y="333" width="38" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="LP_010_START">
+        <dc:Bounds x="232" y="332" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="225" y="375" width="51" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0g356r4_di" bpmnElement="LP_010">
+        <dc:Bounds x="232" y="422" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="215" y="465" width="74" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0fo4ekc_di" bpmnElement="Flow_0fo4ekc">
         <di:waypoint x="930" y="655" />
@@ -265,20 +286,21 @@
         <di:waypoint x="1290" y="440" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1c2ny42_di" bpmnElement="Flow_1c2ny42">
-        <di:waypoint x="298" y="400" />
-        <di:waypoint x="325" y="400" />
+        <di:waypoint x="268" y="350" />
+        <di:waypoint x="325" y="350" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1y91kjd_di" bpmnElement="Flow_1y91kjd">
         <di:waypoint x="860" y="425" />
         <di:waypoint x="860" y="470" />
-        <di:waypoint x="350" y="470" />
-        <di:waypoint x="350" y="425" />
+        <di:waypoint x="430" y="470" />
+        <di:waypoint x="430" y="350" />
+        <di:waypoint x="375" y="350" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="598" y="452" width="15" height="14" />
+          <dc:Bounds x="638" y="452" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ozqosb_di" bpmnElement="Flow_1ozqosb">
-        <di:waypoint x="350" y="375" />
+        <di:waypoint x="350" y="325" />
         <di:waypoint x="350" y="150" />
         <di:waypoint x="390" y="150" />
       </bpmndi:BPMNEdge>
@@ -299,6 +321,14 @@
       <bpmndi:BPMNEdge id="Flow_1ixrfdy_di" bpmnElement="Flow_1ixrfdy">
         <di:waypoint x="490" y="150" />
         <di:waypoint x="530" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_061i855_di" bpmnElement="Flow_061i855">
+        <di:waypoint x="268" y="440" />
+        <di:waypoint x="350" y="440" />
+        <di:waypoint x="350" y="375" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="291" y="422" width="38" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

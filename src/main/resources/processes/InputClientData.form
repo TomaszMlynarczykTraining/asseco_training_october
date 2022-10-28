@@ -8,7 +8,8 @@
       "properties": {},
       "validate": {
         "required": true
-      }
+      },
+      "defaultValue": 3
     },
     {
       "label": "Ulica",
@@ -17,7 +18,8 @@
       "key": "street",
       "validate": {
         "required": true
-      }
+      },
+      "defaultValue": "Zeebes"
     },
     {
       "label": "Telefon",
@@ -26,7 +28,8 @@
       "key": "phoneNumber",
       "validate": {
         "required": true
-      }
+      },
+      "defaultValue": "2423526"
     },
     {
       "label": "Deklarowany dochód",
@@ -35,7 +38,8 @@
       "key": "declaredIncome",
       "validate": {
         "required": true
-      }
+      },
+      "defaultValue": "234566"
     },
     {
       "label": "Waluta",
@@ -46,7 +50,8 @@
         "maxLength": 3,
         "minLength": 3,
         "required": true
-      }
+      },
+      "defaultValue": "KRF"
     }
   ],
   "type": "default",

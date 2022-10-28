@@ -19,9 +19,9 @@
         <bpmn:flowNodeRef>Gateway_0j87p87</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_14ooez8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_024pqwe</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1f2wb1y</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ub192g</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1f2wb1y</bpmn:flowNodeRef>
         <bpmn:childLaneSet id="LaneSet_19k17oq">
           <bpmn:lane id="Lane_045mwnw">
             <bpmn:flowNodeRef>Gateway_0ed3w7j</bpmn:flowNodeRef>
@@ -29,9 +29,9 @@
             <bpmn:flowNodeRef>Gateway_0j87p87</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Event_14ooez8</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Event_024pqwe</bpmn:flowNodeRef>
-            <bpmn:flowNodeRef>Activity_1f2wb1y</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Activity_1ub192g</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Activity_1f2wb1y</bpmn:flowNodeRef>
             <bpmn:childLaneSet id="LaneSet_04sot2p" />
           </bpmn:lane>
         </bpmn:childLaneSet>
@@ -88,11 +88,7 @@
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT10M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
-    <bpmn:manualTask id="Activity_1f2wb1y" name="DMN or ServiceTask to calculate decision">
-      <bpmn:incoming>Flow_05i76o9</bpmn:incoming>
-      <bpmn:outgoing>Flow_0vqz9ix</bpmn:outgoing>
-    </bpmn:manualTask>
-    <bpmn:startEvent id="StartEvent_1" name="Start process">
+    <bpmn:startEvent id="StartEvent_1" name="Start process" camunda:formRef="Form_0jkds6d" camunda:formRefBinding="latest">
       <bpmn:outgoing>Flow_0inhy65</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="Activity_1ub192g" name="Get debt data" camunda:delegateExpression="${shortTermLoanMockDelegate}">
@@ -100,9 +96,14 @@
       <bpmn:outgoing>Flow_18bhtty</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:userTask id="Activity_1fy9chy" name="Manually make a verification">
+      <bpmn:extensionElements />
       <bpmn:incoming>Flow_18bhtty</bpmn:incoming>
       <bpmn:outgoing>Flow_05i76o9</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_1f2wb1y" name="Calculate decision" camunda:delegateExpression="${calculationDelegate}">
+      <bpmn:incoming>Flow_05i76o9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vqz9ix</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:message id="Message_2h1750p" name="messageAdditionalVerification" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -111,12 +112,12 @@
         <dc:Bounds x="129" y="80" width="1041" height="721" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0p6e0q5_di" bpmnElement="Lane_0p6e0q5" isHorizontal="true">
-        <dc:Bounds x="159" y="300" width="1011" height="241" />
+      <bpmndi:BPMNShape id="Lane_0h3czwt_di" bpmnElement="Lane_0h3czwt" isHorizontal="true">
+        <dc:Bounds x="159" y="80" width="1011" height="220" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0fje30l_di" bpmnElement="Lane_0fje30l" isHorizontal="true">
-        <dc:Bounds x="189" y="300" width="981" height="241" />
+      <bpmndi:BPMNShape id="Lane_058at84_di" bpmnElement="Lane_058at84" isHorizontal="true">
+        <dc:Bounds x="189" y="80" width="981" height="220" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1wyzeib_di" bpmnElement="Lane_1wyzeib" isHorizontal="true">
         <dc:Bounds x="159" y="541" width="1011" height="260" />
@@ -125,12 +126,12 @@
       <bpmndi:BPMNShape id="Lane_045mwnw_di" bpmnElement="Lane_045mwnw" isHorizontal="true">
         <dc:Bounds x="189" y="541" width="981" height="260" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0h3czwt_di" bpmnElement="Lane_0h3czwt" isHorizontal="true">
-        <dc:Bounds x="159" y="80" width="1011" height="220" />
+      <bpmndi:BPMNShape id="Lane_0p6e0q5_di" bpmnElement="Lane_0p6e0q5" isHorizontal="true">
+        <dc:Bounds x="159" y="300" width="1011" height="241" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_058at84_di" bpmnElement="Lane_058at84" isHorizontal="true">
-        <dc:Bounds x="189" y="80" width="981" height="220" />
+      <bpmndi:BPMNShape id="Lane_0fje30l_di" bpmnElement="Lane_0fje30l" isHorizontal="true">
+        <dc:Bounds x="189" y="300" width="981" height="241" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0ed3w7j_di" bpmnElement="Gateway_0ed3w7j" isMarkerVisible="true">
         <dc:Bounds x="695" y="625" width="50" height="50" />
@@ -157,10 +158,6 @@
           <dc:Bounds x="581" y="675" width="78" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_17x2gry_di" bpmnElement="Activity_1f2wb1y">
-        <dc:Bounds x="450" y="610" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="212" y="632" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -173,6 +170,10 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1pdos1q_di" bpmnElement="Activity_1fy9chy">
         <dc:Bounds x="310" y="390" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0h8xbcv_di" bpmnElement="Activity_1f2wb1y">
+        <dc:Bounds x="450" y="610" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0inhy65_di" bpmnElement="Flow_0inhy65">

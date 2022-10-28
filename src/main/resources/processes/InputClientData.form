@@ -1,0 +1,61 @@
+{
+  "components": [
+    {
+      "label": "ID",
+      "type": "number",
+      "id": "Field_1bizfon",
+      "key": "customerID",
+      "properties": {},
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Ulica",
+      "type": "textfield",
+      "id": "Field_1rphoxm",
+      "key": "street",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Telefon",
+      "type": "textfield",
+      "id": "Field_1kbuzn9",
+      "key": "phoneNumber",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Deklarowany dochód",
+      "type": "textfield",
+      "id": "Field_1kv4l4c",
+      "key": "declaredIncome",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Waluta",
+      "type": "textfield",
+      "id": "Field_0tr3mli",
+      "key": "currency",
+      "validate": {
+        "maxLength": 3,
+        "minLength": 3,
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_LP_InputClientData",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.4.1"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.18.0",
+  "schemaVersion": 5
+}

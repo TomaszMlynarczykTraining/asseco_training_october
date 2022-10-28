@@ -82,7 +82,7 @@
       <bpmn:incoming>Flow_1y91kjd</bpmn:incoming>
       <bpmn:outgoing>Flow_1ozqosb</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="LP_050" name="LP_050 Validate user data" camunda:delegateExpression="${mockDelegate}">
+    <bpmn:serviceTask id="LP_050" name="LP_050 Validate user data" camunda:delegateExpression="${loanProcessValidateCustomerDataDelegate}">
       <bpmn:incoming>Flow_0lwgpw6</bpmn:incoming>
       <bpmn:outgoing>Flow_0nco5sd</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -98,12 +98,12 @@
       <bpmn:incoming>Flow_0mr7vt7</bpmn:incoming>
       <bpmn:outgoing>Flow_012yfgh</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="LP_030" name="LP_030 Choose loan option">
+    <bpmn:userTask id="LP_030" name="LP_030 Choose loan option" camunda:formRef="Form_LP_LoanType" camunda:formRefBinding="latest">
       <bpmn:extensionElements />
       <bpmn:incoming>Flow_1ozqosb</bpmn:incoming>
       <bpmn:outgoing>Flow_1ixrfdy</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="LP_040" name="LP_040 Fill in data">
+    <bpmn:userTask id="LP_040" name="LP_040 Fill in data" camunda:formRef="Form_LP_InputClientData" camunda:formRefBinding="latest">
       <bpmn:incoming>Flow_1ixrfdy</bpmn:incoming>
       <bpmn:outgoing>Flow_0lwgpw6</bpmn:outgoing>
     </bpmn:userTask>
@@ -138,12 +138,12 @@
       <bpmndi:BPMNShape id="Participant_1fgr6xj_di" bpmnElement="Participant_1fgr6xj" isHorizontal="true">
         <dc:Bounds x="152" y="80" width="1348" height="770" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_07kyqsg_di" bpmnElement="Lane_07kyqsg" isHorizontal="true">
-        <dc:Bounds x="182" y="80" width="1318" height="160" />
+      <bpmndi:BPMNShape id="Lane_006jlsi_di" bpmnElement="Lane_006jlsi" isHorizontal="true">
+        <dc:Bounds x="182" y="520" width="1318" height="330" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1hlivxz_di" bpmnElement="Lane_1hlivxz" isHorizontal="true">
-        <dc:Bounds x="212" y="80" width="1288" height="160" />
+      <bpmndi:BPMNShape id="Lane_10gm4st_di" bpmnElement="Lane_10gm4st" isHorizontal="true">
+        <dc:Bounds x="212" y="520" width="1288" height="330" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_12rntov_di" bpmnElement="Lane_12rntov" isHorizontal="true">
         <dc:Bounds x="182" y="240" width="1318" height="280" />
@@ -152,12 +152,12 @@
       <bpmndi:BPMNShape id="Lane_1qa2r4h_di" bpmnElement="Lane_1qa2r4h" isHorizontal="true">
         <dc:Bounds x="212" y="240" width="1288" height="280" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_006jlsi_di" bpmnElement="Lane_006jlsi" isHorizontal="true">
-        <dc:Bounds x="182" y="520" width="1318" height="330" />
+      <bpmndi:BPMNShape id="Lane_07kyqsg_di" bpmnElement="Lane_07kyqsg" isHorizontal="true">
+        <dc:Bounds x="182" y="80" width="1318" height="160" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_10gm4st_di" bpmnElement="Lane_10gm4st" isHorizontal="true">
-        <dc:Bounds x="212" y="520" width="1288" height="330" />
+      <bpmndi:BPMNShape id="Lane_1hlivxz_di" bpmnElement="Lane_1hlivxz" isHorizontal="true">
+        <dc:Bounds x="212" y="80" width="1288" height="160" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1ikw3dz_di" bpmnElement="LP_080">
         <dc:Bounds x="1030" y="540" width="100" height="80" />

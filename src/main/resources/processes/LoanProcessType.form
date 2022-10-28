@@ -1,0 +1,37 @@
+{
+  "components": [
+    {
+      "values": [
+        {
+          "label": "Długoterminowa",
+          "value": "LONG"
+        },
+        {
+          "label": "Krótkoterminowa",
+          "value": "SHORT"
+        },
+        {
+          "label": "Mieszkaniowa",
+          "value": "HOUSE"
+        }
+      ],
+      "label": "Wybierz rodzaj pożyczki",
+      "type": "radio",
+      "id": "Field_0tu3876",
+      "key": "loanProcessType",
+      "validate": {
+        "required": true
+      },
+      "defaultValue": "LONG"
+    }
+  ],
+  "type": "default",
+  "id": "Form_LP_LoanType",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.4.1"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.18.0",
+  "schemaVersion": 5
+}

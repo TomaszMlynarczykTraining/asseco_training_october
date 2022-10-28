@@ -16,19 +16,17 @@ public class GetDebtData implements JavaDelegate {
     @Autowired
     ClientRepository clientRepository;
 
-    @Autowired
-    DebtRepository debtRepository;
-
-
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         String clientId = (String)delegateExecution.getVariable(LongTermLoanProcess.CLIENT_ID);
-        Client client = clientRepository.getReferenceById(Long.parseLong(clientId));
-        Debt debt = client.getDebt();
-        if(debt!=null){
-            delegateExecution.setVariable(debt.getAmount(), LongTermLoanProcess.DEBT_AMOUNT);
-            delegateExecution.setVariable(debt.getIsOverdue(), LongTermLoanProcess.DEBT_IS_OVERDUE);
-            delegateExecution.setVariable(debt.getCurrency(), LongTermLoanProcess.DEBT_CURRENCY);
+        if (clientId != null) {
+            Client client = clientRepository.getReferenceById(Long.parseLong(clientId));
+            Debt debt = client.getDebt();
+            if (debt!=null) {
+                delegateExecution.setVariable(LongTermLoanProcess.DEBT_AMOUNT, debt.getAmount());
+                delegateExecution.setVariable(LongTermLoanProcess.DEBT_IS_OVERDUE, debt.getIsOverdue());
+                delegateExecution.setVariable(LongTermLoanProcess.DEBT_CURRENCY, debt.getCurrency());
+            }
         }
     }
 }

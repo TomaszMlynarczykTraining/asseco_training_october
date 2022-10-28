@@ -10,5 +10,6 @@ public class LongTermLoanProcess {
     public static String LOAN_AMOUNT_OF_INSTALLAMENT = "loanAmountOfInstallament";
     public static String LOAN_CURRENCY = "loanCurrency";
     public static String LOAN_AMOUNT = "loanAmount";
+    public static String EMAIL_LIST = "emailList";
 
 }

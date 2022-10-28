@@ -7,19 +7,23 @@
     <bpmn:laneSet id="LaneSet_0xio94y">
       <bpmn:lane id="Lane_0o9tq23" name="System">
         <bpmn:flowNodeRef>LTLP_isApplicableToGetLoan</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_16kv07h</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0byzayb</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>LTLP_longTermLoanProcessStart</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LTLP_validateClientCalledActivity</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LTLP_setFlagUserIsNotApplicableScriptTask</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_16kv07h</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LTLP_sendMailToAllUsersServiceTask</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LTLP_getAllUsersEMailServiceTask</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LTLP_longTermLoanProcessStart</bpmn:flowNodeRef>
         <bpmn:childLaneSet id="LaneSet_17uua6c">
           <bpmn:lane id="Lane_090x749">
             <bpmn:flowNodeRef>LTLP_isApplicableToGetLoan</bpmn:flowNodeRef>
-            <bpmn:flowNodeRef>Event_16kv07h</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Gateway_0byzayb</bpmn:flowNodeRef>
-            <bpmn:flowNodeRef>LTLP_longTermLoanProcessStart</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>LTLP_validateClientCalledActivity</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>LTLP_setFlagUserIsNotApplicableScriptTask</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Event_16kv07h</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LTLP_sendMailToAllUsersServiceTask</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LTLP_getAllUsersEMailServiceTask</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LTLP_longTermLoanProcessStart</bpmn:flowNodeRef>
           </bpmn:lane>
         </bpmn:childLaneSet>
       </bpmn:lane>
@@ -37,17 +41,11 @@
       <bpmn:outgoing>Flow_0320bum</bpmn:outgoing>
       <bpmn:outgoing>Flow_1fzu3gq</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:endEvent id="Event_16kv07h">
-      <bpmn:incoming>Flow_1plyafv</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:exclusiveGateway id="Gateway_0byzayb">
       <bpmn:incoming>Flow_0rh186x</bpmn:incoming>
       <bpmn:incoming>Flow_1ff81kx</bpmn:incoming>
       <bpmn:outgoing>Flow_1plyafv</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:startEvent id="LTLP_longTermLoanProcessStart" camunda:formRef="ClientIdForm" camunda:formRefBinding="latest">
-      <bpmn:outgoing>Flow_1m17sys</bpmn:outgoing>
-    </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_08e9zv5" sourceRef="LTLP_validateClientCalledActivity" targetRef="LTLP_isApplicableToGetLoan" />
     <bpmn:sequenceFlow id="Flow_0320bum" name="Yes" sourceRef="LTLP_isApplicableToGetLoan" targetRef="LTLP_confirmUserTask">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isApplicableToGetLoan}</bpmn:conditionExpression>
@@ -55,7 +53,7 @@
     <bpmn:sequenceFlow id="Flow_1fzu3gq" name="No" sourceRef="LTLP_isApplicableToGetLoan" targetRef="LTLP_setFlagUserIsNotApplicableScriptTask">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!isApplicableToGetLoan}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1plyafv" sourceRef="Gateway_0byzayb" targetRef="Event_16kv07h" />
+    <bpmn:sequenceFlow id="Flow_1plyafv" sourceRef="Gateway_0byzayb" targetRef="LTLP_getAllUsersEMailServiceTask" />
     <bpmn:sequenceFlow id="Flow_0rh186x" sourceRef="LTLP_setFlagUserIsNotApplicableScriptTask" targetRef="Gateway_0byzayb" />
     <bpmn:sequenceFlow id="Flow_1ff81kx" sourceRef="LTLP_confirmUserTask" targetRef="Gateway_0byzayb" />
     <bpmn:sequenceFlow id="Flow_1m17sys" sourceRef="LTLP_longTermLoanProcessStart" targetRef="LTLP_validateClientCalledActivity" />
@@ -75,25 +73,45 @@
       <bpmn:incoming>Flow_1fzu3gq</bpmn:incoming>
       <bpmn:outgoing>Flow_0rh186x</bpmn:outgoing>
     </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0a0ouhb" sourceRef="LTLP_sendMailToAllUsersServiceTask" targetRef="Event_16kv07h" />
+    <bpmn:sequenceFlow id="Flow_16s6jia" sourceRef="LTLP_getAllUsersEMailServiceTask" targetRef="LTLP_sendMailToAllUsersServiceTask" />
+    <bpmn:endEvent id="Event_16kv07h">
+      <bpmn:incoming>Flow_0a0ouhb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="LTLP_sendMailToAllUsersServiceTask" name="Send mail to all users" camunda:delegateExpression="${sendMailToAllUsers}">
+      <bpmn:incoming>Flow_16s6jia</bpmn:incoming>
+      <bpmn:outgoing>Flow_0a0ouhb</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics camunda:collection="emailList" camunda:elementVariable="emailId" />
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="LTLP_getAllUsersEMailServiceTask" name="Get all users e-mail" camunda:delegateExpression="${getAllUsersEMail}">
+      <bpmn:incoming>Flow_1plyafv</bpmn:incoming>
+      <bpmn:outgoing>Flow_16s6jia</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="LTLP_longTermLoanProcessStart" camunda:formRef="ClientIdForm" camunda:formRefBinding="latest">
+      <bpmn:outgoing>Flow_1m17sys</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_16wnihw">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R3/PT2M</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:startEvent>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_03mxynp">
       <bpmndi:BPMNShape id="Participant_0lrwkg7_di" bpmnElement="Participant_0lrwkg7" isHorizontal="true">
-        <dc:Bounds x="129" y="80" width="1000" height="440" />
+        <dc:Bounds x="129" y="80" width="1401" height="440" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0fytrc9_di" bpmnElement="Lane_0fytrc9" isHorizontal="true">
-        <dc:Bounds x="159" y="80" width="970" height="120" />
+        <dc:Bounds x="159" y="80" width="1371" height="120" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_18g370w_di" bpmnElement="Lane_18g370w" isHorizontal="true">
-        <dc:Bounds x="189" y="80" width="940" height="120" />
+        <dc:Bounds x="189" y="80" width="1341" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0o9tq23_di" bpmnElement="Lane_0o9tq23" isHorizontal="true">
-        <dc:Bounds x="159" y="200" width="970" height="320" />
+        <dc:Bounds x="159" y="200" width="1371" height="320" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_090x749_di" bpmnElement="Lane_090x749" isHorizontal="true">
-        <dc:Bounds x="189" y="200" width="940" height="320" />
+        <dc:Bounds x="189" y="200" width="1341" height="320" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_128ohsg_di" bpmnElement="LTLP_isApplicableToGetLoan" isMarkerVisible="true">
         <dc:Bounds x="565" y="342" width="50" height="50" />
@@ -101,14 +119,8 @@
           <dc:Bounds x="553" y="402" width="74" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_16kv07h_di" bpmnElement="Event_16kv07h">
-        <dc:Bounds x="1072" y="349" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0byzayb_di" bpmnElement="Gateway_0byzayb" isMarkerVisible="true">
         <dc:Bounds x="945" y="342" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="LTLP_longTermLoanProcessStart">
-        <dc:Bounds x="222" y="349" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0awj9v4_di" bpmnElement="LTLP_confirmUserTask">
         <dc:Bounds x="730" y="100" width="100" height="80" />
@@ -120,6 +132,18 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1vmppej_di" bpmnElement="LTLP_setFlagUserIsNotApplicableScriptTask">
         <dc:Bounds x="730" y="327" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16kv07h_di" bpmnElement="Event_16kv07h">
+        <dc:Bounds x="1342" y="349" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0o2gkah_di" bpmnElement="LTLP_sendMailToAllUsersServiceTask">
+        <dc:Bounds x="1190" y="327" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0s2imbh_di" bpmnElement="LTLP_getAllUsersEMailServiceTask">
+        <dc:Bounds x="1040" y="327" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_01hchky_di" bpmnElement="LTLP_longTermLoanProcessStart">
+        <dc:Bounds x="222" y="349" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_08e9zv5_di" bpmnElement="Flow_08e9zv5">
         <di:waypoint x="440" y="367" />
@@ -142,7 +166,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1plyafv_di" bpmnElement="Flow_1plyafv">
         <di:waypoint x="995" y="367" />
-        <di:waypoint x="1072" y="367" />
+        <di:waypoint x="1040" y="367" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0rh186x_di" bpmnElement="Flow_0rh186x">
         <di:waypoint x="830" y="367" />
@@ -156,6 +180,14 @@
       <bpmndi:BPMNEdge id="Flow_1m17sys_di" bpmnElement="Flow_1m17sys">
         <di:waypoint x="258" y="367" />
         <di:waypoint x="340" y="367" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a0ouhb_di" bpmnElement="Flow_0a0ouhb">
+        <di:waypoint x="1290" y="367" />
+        <di:waypoint x="1342" y="367" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16s6jia_di" bpmnElement="Flow_16s6jia">
+        <di:waypoint x="1140" y="367" />
+        <di:waypoint x="1190" y="367" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

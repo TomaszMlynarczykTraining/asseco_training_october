@@ -21,6 +21,7 @@
         <bpmn:flowNodeRef>Event_024pqwe</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ub192g</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1plh2hs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1f2wb1y</bpmn:flowNodeRef>
         <bpmn:childLaneSet id="LaneSet_19k17oq">
           <bpmn:lane id="Lane_045mwnw">
@@ -31,6 +32,7 @@
             <bpmn:flowNodeRef>Event_024pqwe</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Activity_1ub192g</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Event_1plh2hs</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Activity_1f2wb1y</bpmn:flowNodeRef>
             <bpmn:childLaneSet id="LaneSet_04sot2p" />
           </bpmn:lane>
@@ -93,6 +95,7 @@
     </bpmn:startEvent>
     <bpmn:serviceTask id="Activity_1ub192g" name="Get debt data" camunda:delegateExpression="${shortTermLoanMockDelegate}">
       <bpmn:incoming>Flow_0inhy65</bpmn:incoming>
+      <bpmn:incoming>Flow_0t5ayxr</bpmn:incoming>
       <bpmn:outgoing>Flow_18bhtty</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:userTask id="Activity_1fy9chy" name="Manually make a verification">
@@ -100,12 +103,22 @@
       <bpmn:incoming>Flow_18bhtty</bpmn:incoming>
       <bpmn:outgoing>Flow_05i76o9</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_1f2wb1y" name="Calculate decision" camunda:delegateExpression="${calculationDelegate}">
+    <bpmn:sequenceFlow id="Flow_0t5ayxr" sourceRef="Event_1plh2hs" targetRef="Activity_1ub192g" />
+    <bpmn:startEvent id="Event_1plh2hs">
+      <bpmn:outgoing>Flow_0t5ayxr</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1yjs91i" messageRef="Message_130noih" />
+    </bpmn:startEvent>
+    <bpmn:callActivity id="Activity_1f2wb1y" name="Calculate decision" calledElement="Process_1jodzqq">
+      <bpmn:extensionElements>
+        <camunda:out variables="all" />
+        <camunda:in variables="all" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_05i76o9</bpmn:incoming>
       <bpmn:outgoing>Flow_0vqz9ix</bpmn:outgoing>
-    </bpmn:serviceTask>
+    </bpmn:callActivity>
   </bpmn:process>
   <bpmn:message id="Message_2h1750p" name="messageAdditionalVerification" />
+  <bpmn:message id="Message_130noih" name="startShortTermLoanProcess" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ShortTermLoan">
       <bpmndi:BPMNShape id="Participant_0oa49pr_di" bpmnElement="Participant_0oa49pr" isHorizontal="true">
@@ -172,9 +185,11 @@
         <dc:Bounds x="310" y="390" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0h8xbcv_di" bpmnElement="Activity_1f2wb1y">
+      <bpmndi:BPMNShape id="Event_1gu6xlf_di" bpmnElement="Event_1plh2hs">
+        <dc:Bounds x="212" y="562" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lp9ecf_di" bpmnElement="Activity_1f2wb1y">
         <dc:Bounds x="450" y="610" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0inhy65_di" bpmnElement="Flow_0inhy65">
         <di:waypoint x="248" y="650" />
@@ -226,6 +241,12 @@
       <bpmndi:BPMNEdge id="Flow_0vqz9ix_di" bpmnElement="Flow_0vqz9ix">
         <di:waypoint x="550" y="650" />
         <di:waypoint x="602" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t5ayxr_di" bpmnElement="Flow_0t5ayxr">
+        <di:waypoint x="248" y="580" />
+        <di:waypoint x="279" y="580" />
+        <di:waypoint x="279" y="620" />
+        <di:waypoint x="310" y="620" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

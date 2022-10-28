@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_0t4ab7r" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_0t4ab7r" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
   <decision id="G1_PriorityOfInvoice" name="Decyzja o priorytecie faktury">
     <decisionTable id="DecisionTable_0jwjz2e" hitPolicy="FIRST">
       <input id="Input_1" biodi:width="192">
@@ -7,7 +7,7 @@
           <text>value</text>
         </inputExpression>
       </input>
-      <input id="InputClause_1bfmu9x" label="paymentDate" biodi:width="250">
+      <input id="InputClause_1bfmu9x" biodi:width="250" camunda:inputVariable="paymentDate">
         <inputExpression id="LiteralExpression_1o5n4xy" typeRef="date" expressionLanguage="feel">
           <text></text>
         </inputExpression>
@@ -21,7 +21,7 @@
           <text>-</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_05htrga">
-          <text>Wysoki</text>
+          <text>"Wysoki"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0h2b94h">
@@ -29,10 +29,10 @@
           <text>-</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0x0njr6">
-          <text>&lt;today().plusDays(10).toDate()</text>
+          <text>date(now()) &gt; date(duration("P10D") + paymentDate)</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1q3r0mb">
-          <text>Wysoki</text>
+          <text>"Wysoki"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1quprwj">
@@ -43,7 +43,7 @@
           <text>-</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0xm6xa5">
-          <text>Niski</text>
+          <text>"Niski"</text>
         </outputEntry>
       </rule>
     </decisionTable>

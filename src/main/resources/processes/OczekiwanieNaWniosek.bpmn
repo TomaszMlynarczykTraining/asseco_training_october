@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1thvtad" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <bpmn:process id="OczekiwanieNaWniosek" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0tq5we9</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_0vbuku9">
+      <bpmn:incoming>Flow_0cmve34</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_0qwzfuq" name="Oczekiwanie na wniosek">
+      <bpmn:incoming>Flow_0tq5we9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cmve34</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:boundaryEvent id="konczacy_proces" attachedToRef="Activity_0qwzfuq">
+      <bpmn:outgoing>Flow_0rez97p</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1kze9ie" messageRef="Message_1tqggdk" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0tq5we9" sourceRef="StartEvent_1" targetRef="Activity_0qwzfuq" />
+    <bpmn:sequenceFlow id="Flow_0cmve34" sourceRef="Activity_0qwzfuq" targetRef="Event_0vbuku9" />
+    <bpmn:endEvent id="Event_0pxj3x6">
+      <bpmn:incoming>Flow_0rez97p</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0rez97p" sourceRef="konczacy_proces" targetRef="Event_0pxj3x6" />
+  </bpmn:process>
+  <bpmn:message id="Message_1tqggdk" name="konczacy_proces" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="OczekiwanieNaWniosek">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vbuku9_di" bpmnElement="Event_0vbuku9">
+        <dc:Bounds x="592" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13s4npv_di" bpmnElement="Activity_0qwzfuq">
+        <dc:Bounds x="350" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0pxj3x6_di" bpmnElement="Event_0pxj3x6">
+        <dc:Bounds x="432" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0b27c5i_di" bpmnElement="konczacy_proces">
+        <dc:Bounds x="432" y="139" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0tq5we9_di" bpmnElement="Flow_0tq5we9">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="350" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cmve34_di" bpmnElement="Flow_0cmve34">
+        <di:waypoint x="450" y="117" />
+        <di:waypoint x="592" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rez97p_di" bpmnElement="Flow_0rez97p">
+        <di:waypoint x="450" y="175" />
+        <di:waypoint x="450" y="252" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

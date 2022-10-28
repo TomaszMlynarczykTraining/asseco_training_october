@@ -4,7 +4,30 @@
       "label": "Email Adress",
       "type": "textfield",
       "id": "Field_1wgfb7v",
-      "key": "emailAddress"
+      "key": "emailAddress",
+      "description": "This field should be filled with mail adress.",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "values": [
+        {
+          "label": "HTML",
+          "value": "HTML"
+        },
+        {
+          "label": "JSON",
+          "value": "JSON"
+        }
+      ],
+      "label": "Mail type",
+      "type": "radio",
+      "id": "Field_0x75wdi",
+      "key": "mailType",
+      "validate": {
+        "required": true
+      }
     }
   ],
   "type": "default",

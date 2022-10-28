@@ -10,8 +10,7 @@ public class CalculateCreditRating implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-
-        delegateExecution.setVariable(LongTermLoanProcess.IS_APPLICABLE_TO_GET_LOAN, Boolean.TRUE);
-
+        boolean isApplicableToGetLoan = delegateExecution.getVariable(LongTermLoanProcess.DEBT_AMOUNT) == null;
+        delegateExecution.setVariable(LongTermLoanProcess.IS_APPLICABLE_TO_GET_LOAN, isApplicableToGetLoan);
     }
 }

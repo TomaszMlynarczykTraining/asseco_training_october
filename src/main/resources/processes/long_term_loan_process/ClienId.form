@@ -1,0 +1,20 @@
+{
+  "components": [
+    {
+      "label": "Clien ID",
+      "type": "textfield",
+      "id": "Field_0qxxc1t",
+      "key": "clientId",
+      "properties": {}
+    }
+  ],
+  "type": "default",
+  "id": "ClientIdForm",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.4.1"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.18.0",
+  "schemaVersion": 5
+}

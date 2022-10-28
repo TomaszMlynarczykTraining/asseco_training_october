@@ -36,10 +36,15 @@
         </bpmn:childLaneSet>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:startEvent id="StartEvent_1">
+    <bpmn:startEvent id="StartEvent_1" camunda:formRef="Form_clientId" camunda:formRefBinding="latest">
       <bpmn:outgoing>Flow_1pcgndz</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:serviceTask id="ST_001" name="Get previous user debts" camunda:delegateExpression="${mockDelegate}">
+    <bpmn:serviceTask id="ST_001" name="Get previous user debts" camunda:delegateExpression="${houseLoanService}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="clientId">${clientId}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1pcgndz</bpmn:incoming>
       <bpmn:incoming>Flow_17hlxx7</bpmn:incoming>
       <bpmn:outgoing>Flow_0ibmg9f</bpmn:outgoing>
@@ -51,7 +56,7 @@
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT12S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
-    <bpmn:sendTask id="MES_001" name="Send email to debt department" camunda:delegateExpression="${houseLoanService}">
+    <bpmn:sendTask id="MES_001" name="Send email to debt department" camunda:delegateExpression="${mockDelegate}">
       <bpmn:incoming>Flow_1esus3c</bpmn:incoming>
       <bpmn:outgoing>Flow_0kk4zpy</bpmn:outgoing>
     </bpmn:sendTask>
@@ -60,13 +65,13 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1pcgndz" sourceRef="StartEvent_1" targetRef="ST_001" />
     <bpmn:sequenceFlow id="Flow_17hlxx7" name="No (process other debt)" sourceRef="Gateway_001" targetRef="ST_001">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${debt} &lt; 300</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${debt &lt; 300}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0ibmg9f" sourceRef="ST_001" targetRef="TIM_001" />
     <bpmn:sequenceFlow id="Flow_1esus3c" sourceRef="TIM_001" targetRef="MES_001" />
     <bpmn:sequenceFlow id="Flow_0kk4zpy" sourceRef="MES_001" targetRef="Activity_1luk35m" />
     <bpmn:sequenceFlow id="Flow_1whw7h3" name="Yes" sourceRef="Gateway_001" targetRef="UT_001">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${debt} &gt; 300</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${debt &gt; 300}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_12c61ow" sourceRef="UT_001" targetRef="UT_002" />
     <bpmn:sequenceFlow id="Flow_1cx59k7" sourceRef="UT_002" targetRef="END" />
@@ -76,7 +81,7 @@
       <bpmn:outgoing>Flow_1whw7h3</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0ghx7rr" sourceRef="Activity_1luk35m" targetRef="Gateway_001" />
-    <bpmn:serviceTask id="Activity_1luk35m" name="Aggregate debts" camunda:delegateExpression="${mockDelegate}">
+    <bpmn:serviceTask id="Activity_1luk35m" name="Aggregate debts" camunda:asyncAfter="true" camunda:delegateExpression="${mockDelegate}">
       <bpmn:incoming>Flow_0kk4zpy</bpmn:incoming>
       <bpmn:outgoing>Flow_0ghx7rr</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -99,13 +104,6 @@
         <dc:Bounds x="160" y="85" width="1200" height="825" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_08r743k_di" bpmnElement="Lane_08r743k" isHorizontal="true">
-        <dc:Bounds x="190" y="85" width="1170" height="410" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_01oyi4r_di" bpmnElement="Lane_01oyi4r" isHorizontal="true">
-        <dc:Bounds x="220" y="85" width="1140" height="410" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1kgm8kr_di" bpmnElement="Lane_1kgm8kr" isHorizontal="true">
         <dc:Bounds x="190" y="495" width="1170" height="415" />
         <bpmndi:BPMNLabel />
@@ -113,9 +111,12 @@
       <bpmndi:BPMNShape id="Lane_19s0cco_di" bpmnElement="Lane_19s0cco" isHorizontal="true">
         <dc:Bounds x="220" y="495" width="1140" height="415" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_04ru2pn_di" bpmnElement="TextAnnotation_04ru2pn">
-        <dc:Bounds x="550" y="523" width="100" height="30" />
+      <bpmndi:BPMNShape id="Lane_08r743k_di" bpmnElement="Lane_08r743k" isHorizontal="true">
+        <dc:Bounds x="190" y="85" width="1170" height="410" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_01oyi4r_di" bpmnElement="Lane_01oyi4r" isHorizontal="true">
+        <dc:Bounds x="220" y="85" width="1140" height="410" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="269" y="632" width="36" height="36" />
@@ -153,10 +154,10 @@
       <bpmndi:BPMNShape id="Activity_05ykrlu_di" bpmnElement="UT_002">
         <dc:Bounds x="1070" y="320" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_0uv2ci0_di" bpmnElement="Association_0uv2ci0">
-        <di:waypoint x="645" y="610" />
-        <di:waypoint x="609" y="553" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_04ru2pn_di" bpmnElement="TextAnnotation_04ru2pn">
+        <dc:Bounds x="550" y="523" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1pcgndz_di" bpmnElement="Flow_1pcgndz">
         <di:waypoint x="305" y="650" />
         <di:waypoint x="360" y="650" />
@@ -200,6 +201,10 @@
       <bpmndi:BPMNEdge id="Flow_0ghx7rr_di" bpmnElement="Flow_0ghx7rr">
         <di:waypoint x="860" y="650" />
         <di:waypoint x="905" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0uv2ci0_di" bpmnElement="Association_0uv2ci0">
+        <di:waypoint x="645" y="610" />
+        <di:waypoint x="609" y="553" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -23,7 +23,8 @@ public class CorellateMessage implements JavaDelegate {
 
         MessageCorrelationResult someMessage = delegateExecution.getProcessEngineServices()
                 .getRuntimeService()
-                .createMessageCorrelation("otherMessageName").correlateWithResult();
+                .createMessageCorrelation("offer_validation.cancel_offer.inform_user")
+                .correlateWithResult();
         //podobnie jak powyzej, mozemy uzyc tego kodu w sekcji Implementation -> Expression
         // .correlate() - nie zwraca wyniku
                // .correlateWithResult(); - zwraca nam wynik, wyrzuca incydent

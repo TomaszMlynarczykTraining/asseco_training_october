@@ -9,8 +9,8 @@ public class CalculationDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         String amount = (String) delegateExecution.getVariable("debtAmount");
-        String verified = (String) delegateExecution.getVariable("verified");
-        if (Long.valueOf(amount) > 500 && verified == "yes") {
+        String userDecision = (String) delegateExecution.getVariable("userDecision");
+        if (Long.valueOf(amount) > 50 && userDecision == "yes") {
             delegateExecution.setVariable("positivelyVerified", "Yes");
         } else {
             delegateExecution.setVariable("positivelyVerified", "No");

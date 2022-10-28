@@ -29,7 +29,7 @@
           <text></text>
         </inputEntry>
         <inputEntry id="UnaryTests_0799z1t">
-          <text>in (29, 30, 31)</text>
+          <text>&gt;28</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1fs2yui">
           <text>"rejested"</text>

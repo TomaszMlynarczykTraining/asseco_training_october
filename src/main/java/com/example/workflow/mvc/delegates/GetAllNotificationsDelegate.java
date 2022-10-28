@@ -18,6 +18,5 @@ public class GetAllNotificationsDelegate implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
         List<Notification> listOfNotifications = notificationService.getNotification().stream().toList();
         delegateExecution.setVariable("notificationList", listOfNotifications);
-
     }
 }

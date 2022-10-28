@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1i9pwri" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <bpmn:process id="Loan_Process_Start" name="Loan Process Start" isExecutable="true">
+    <bpmn:startEvent id="LPS_010_START" name="LPS_010">
+      <bpmn:outgoing>Flow_19hh6bl</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_0qojozw">
+      <bpmn:incoming>Flow_0z7n4j9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0b67pmn" sourceRef="LPS_020" targetRef="LPS_030" />
+    <bpmn:sequenceFlow id="Flow_19hh6bl" sourceRef="LPS_010_START" targetRef="LPS_020" />
+    <bpmn:userTask id="LPS_020" name="LPS_020 Uruchom proces pożyczki">
+      <bpmn:incoming>Flow_19hh6bl</bpmn:incoming>
+      <bpmn:outgoing>Flow_0b67pmn</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0z7n4j9" sourceRef="LPS_030" targetRef="Event_0qojozw" />
+    <bpmn:serviceTask id="LPS_030" name="LPS_030 Start Procesu LP" camunda:delegateExpression="${startLoanProcessDelegate}">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_0b67pmn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z7n4j9</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Loan_Process_Start">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="LPS_010_START">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="174" y="142" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ccl1lj_di" bpmnElement="LPS_020">
+        <dc:Bounds x="280" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0qojozw_di" bpmnElement="Event_0qojozw">
+        <dc:Bounds x="582" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kp3ub9_di" bpmnElement="LPS_030">
+        <dc:Bounds x="440" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_19hh6bl_di" bpmnElement="Flow_19hh6bl">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="280" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0b67pmn_di" bpmnElement="Flow_0b67pmn">
+        <di:waypoint x="380" y="117" />
+        <di:waypoint x="440" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0z7n4j9_di" bpmnElement="Flow_0z7n4j9">
+        <di:waypoint x="540" y="117" />
+        <di:waypoint x="582" y="117" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

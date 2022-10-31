@@ -8,22 +8,28 @@
       <bpmn:lane id="Lane_0o9tq23" name="System">
         <bpmn:flowNodeRef>LTLP_isApplicableToGetLoan</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0byzayb</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>LTLP_validateClientCalledActivity</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LTLP_setFlagUserIsNotApplicableScriptTask</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_16kv07h</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LTLP_sendMailToAllUsersServiceTask</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LTLP_getAllUsersEMailServiceTask</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LTLP_validateClientCalledActivity</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LTLP_longTermLoanProcessStart</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LTLP_acceptRODO</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LTLP_rodoTimer</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LTLP_startProcessByMessage</bpmn:flowNodeRef>
         <bpmn:childLaneSet id="LaneSet_17uua6c">
           <bpmn:lane id="Lane_090x749">
             <bpmn:flowNodeRef>LTLP_isApplicableToGetLoan</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Gateway_0byzayb</bpmn:flowNodeRef>
-            <bpmn:flowNodeRef>LTLP_validateClientCalledActivity</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>LTLP_setFlagUserIsNotApplicableScriptTask</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Event_16kv07h</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>LTLP_sendMailToAllUsersServiceTask</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>LTLP_getAllUsersEMailServiceTask</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LTLP_validateClientCalledActivity</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>LTLP_longTermLoanProcessStart</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LTLP_acceptRODO</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LTLP_rodoTimer</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LTLP_startProcessByMessage</bpmn:flowNodeRef>
           </bpmn:lane>
         </bpmn:childLaneSet>
       </bpmn:lane>
@@ -56,19 +62,7 @@
     <bpmn:sequenceFlow id="Flow_1plyafv" sourceRef="Gateway_0byzayb" targetRef="LTLP_getAllUsersEMailServiceTask" />
     <bpmn:sequenceFlow id="Flow_0rh186x" sourceRef="LTLP_setFlagUserIsNotApplicableScriptTask" targetRef="Gateway_0byzayb" />
     <bpmn:sequenceFlow id="Flow_1ff81kx" sourceRef="LTLP_confirmUserTask" targetRef="Gateway_0byzayb" />
-    <bpmn:sequenceFlow id="Flow_1m17sys" sourceRef="LTLP_longTermLoanProcessStart" targetRef="LTLP_validateClientCalledActivity" />
-    <bpmn:userTask id="LTLP_confirmUserTask" name="Confirm">
-      <bpmn:incoming>Flow_0320bum</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ff81kx</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:callActivity id="LTLP_validateClientCalledActivity" name="Validate client credit rating" calledElement="ValidateCRProcess">
-      <bpmn:extensionElements>
-        <camunda:out source="isApplicableToGetLoan" target="isApplicableToGetLoan" />
-        <camunda:in source="clientId" target="clientId" />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1m17sys</bpmn:incoming>
-      <bpmn:outgoing>Flow_08e9zv5</bpmn:outgoing>
-    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_1m17sys" sourceRef="LTLP_longTermLoanProcessStart" targetRef="LTLP_acceptRODO" />
     <bpmn:manualTask id="LTLP_setFlagUserIsNotApplicableScriptTask" name="Set flag userIsNotApplicable to false">
       <bpmn:incoming>Flow_1fzu3gq</bpmn:incoming>
       <bpmn:outgoing>Flow_0rh186x</bpmn:outgoing>
@@ -87,13 +81,46 @@
       <bpmn:incoming>Flow_1plyafv</bpmn:incoming>
       <bpmn:outgoing>Flow_16s6jia</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:userTask id="LTLP_confirmUserTask" name="Confirm">
+      <bpmn:incoming>Flow_0320bum</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ff81kx</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:callActivity id="LTLP_validateClientCalledActivity" name="Validate client credit rating" calledElement="ValidateCRProcess">
+      <bpmn:extensionElements>
+        <camunda:out source="isApplicableToGetLoan" target="isApplicableToGetLoan" />
+        <camunda:in source="clientId" target="clientId" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0do7mkb</bpmn:incoming>
+      <bpmn:incoming>Flow_1v8k69j</bpmn:incoming>
+      <bpmn:outgoing>Flow_08e9zv5</bpmn:outgoing>
+    </bpmn:callActivity>
     <bpmn:startEvent id="LTLP_longTermLoanProcessStart" camunda:formRef="ClientIdForm" camunda:formRefBinding="latest">
       <bpmn:outgoing>Flow_1m17sys</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_16wnihw">
         <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R3/PT2M</bpmn:timeCycle>
       </bpmn:timerEventDefinition>
     </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0do7mkb" sourceRef="LTLP_acceptRODO" targetRef="LTLP_validateClientCalledActivity" />
+    <bpmn:userTask id="LTLP_acceptRODO" name="Accept RODO">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_1m17sys</bpmn:incoming>
+      <bpmn:incoming>Flow_1yj58a3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0do7mkb</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:boundaryEvent id="LTLP_rodoTimer" attachedToRef="LTLP_acceptRODO">
+      <bpmn:outgoing>Flow_1v8k69j</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0c5qhxw">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT40S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1v8k69j" sourceRef="LTLP_rodoTimer" targetRef="LTLP_validateClientCalledActivity" />
+    <bpmn:sequenceFlow id="Flow_1yj58a3" sourceRef="LTLP_startProcessByMessage" targetRef="LTLP_acceptRODO" />
+    <bpmn:startEvent id="LTLP_startProcessByMessage">
+      <bpmn:outgoing>Flow_1yj58a3</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1tzwley" messageRef="Message_185j8dd" />
+    </bpmn:startEvent>
   </bpmn:process>
+  <bpmn:message id="Message_185j8dd" name="LTLP_start" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_03mxynp">
       <bpmndi:BPMNShape id="Participant_0lrwkg7_di" bpmnElement="Participant_0lrwkg7" isHorizontal="true">
@@ -122,14 +149,6 @@
       <bpmndi:BPMNShape id="Gateway_0byzayb_di" bpmnElement="Gateway_0byzayb" isMarkerVisible="true">
         <dc:Bounds x="945" y="342" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0awj9v4_di" bpmnElement="LTLP_confirmUserTask">
-        <dc:Bounds x="730" y="100" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1dguea7_di" bpmnElement="LTLP_validateClientCalledActivity">
-        <dc:Bounds x="340" y="327" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1vmppej_di" bpmnElement="LTLP_setFlagUserIsNotApplicableScriptTask">
         <dc:Bounds x="730" y="327" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -142,11 +161,29 @@
       <bpmndi:BPMNShape id="Activity_0s2imbh_di" bpmnElement="LTLP_getAllUsersEMailServiceTask">
         <dc:Bounds x="1040" y="327" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0awj9v4_di" bpmnElement="LTLP_confirmUserTask">
+        <dc:Bounds x="730" y="100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dguea7_di" bpmnElement="LTLP_validateClientCalledActivity">
+        <dc:Bounds x="430" y="327" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_01hchky_di" bpmnElement="LTLP_longTermLoanProcessStart">
-        <dc:Bounds x="222" y="349" width="36" height="36" />
+        <dc:Bounds x="202" y="349" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0khzdkv_di" bpmnElement="LTLP_acceptRODO">
+        <dc:Bounds x="280" y="327" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1el0yye_di" bpmnElement="LTLP_startProcessByMessage">
+        <dc:Bounds x="202" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1gvftxz_di" bpmnElement="LTLP_rodoTimer">
+        <dc:Bounds x="362" y="309" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_08e9zv5_di" bpmnElement="Flow_08e9zv5">
-        <di:waypoint x="440" y="367" />
+        <di:waypoint x="530" y="367" />
         <di:waypoint x="565" y="367" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0320bum_di" bpmnElement="Flow_0320bum">
@@ -178,8 +215,8 @@
         <di:waypoint x="970" y="342" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1m17sys_di" bpmnElement="Flow_1m17sys">
-        <di:waypoint x="258" y="367" />
-        <di:waypoint x="340" y="367" />
+        <di:waypoint x="238" y="367" />
+        <di:waypoint x="280" y="367" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0a0ouhb_di" bpmnElement="Flow_0a0ouhb">
         <di:waypoint x="1290" y="367" />
@@ -188,6 +225,21 @@
       <bpmndi:BPMNEdge id="Flow_16s6jia_di" bpmnElement="Flow_16s6jia">
         <di:waypoint x="1140" y="367" />
         <di:waypoint x="1190" y="367" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0do7mkb_di" bpmnElement="Flow_0do7mkb">
+        <di:waypoint x="380" y="367" />
+        <di:waypoint x="430" y="367" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v8k69j_di" bpmnElement="Flow_1v8k69j">
+        <di:waypoint x="380" y="309" />
+        <di:waypoint x="380" y="270" />
+        <di:waypoint x="490" y="270" />
+        <di:waypoint x="490" y="327" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yj58a3_di" bpmnElement="Flow_1yj58a3">
+        <di:waypoint x="238" y="270" />
+        <di:waypoint x="330" y="270" />
+        <di:waypoint x="330" y="327" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

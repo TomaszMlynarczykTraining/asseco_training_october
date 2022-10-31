@@ -2,14 +2,13 @@
   "components": [
     {
       "label": "ID",
-      "type": "number",
-      "id": "Field_1bizfon",
+      "type": "textfield",
+      "id": "Field_1llxuvd",
       "key": "customerID",
-      "properties": {},
+      "defaultValue": "3",
       "validate": {
         "required": true
-      },
-      "defaultValue": 3
+      }
     },
     {
       "label": "Ulica",

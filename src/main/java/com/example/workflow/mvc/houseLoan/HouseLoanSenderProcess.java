@@ -1,4 +1,4 @@
-package com.example.workflow.mvc.loanProcess;
+package com.example.workflow.mvc.houseLoan;
 
 public class HouseLoanSenderProcess {
 

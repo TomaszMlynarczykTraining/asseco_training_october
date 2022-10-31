@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class EmailSender implements JavaDelegate{
+public class MailSender implements JavaDelegate{
 
     @Autowired
     RuntimeService runtimeService;
 
+    @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         runtimeService.createMessageCorrelation("email").processInstanceBusinessKey("123");
     }

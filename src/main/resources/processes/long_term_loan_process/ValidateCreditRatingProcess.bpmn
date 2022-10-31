@@ -4,7 +4,7 @@
     <bpmn:startEvent id="ValidateCR_start">
       <bpmn:outgoing>Flow_0n2go0x</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:serviceTask id="ValidateCR_getDebtDataServiceTask" name="Get debt data" camunda:delegateExpression="${mockDelegate}">
+    <bpmn:serviceTask id="ValidateCR_getDebtDataServiceTask" name="Get debt data" camunda:delegateExpression="${getDebtData}">
       <bpmn:incoming>Flow_0n2go0x</bpmn:incoming>
       <bpmn:outgoing>Flow_08e9zv5</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -44,13 +44,13 @@
         <dc:Bounds x="540" y="77" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0n2go0x_di" bpmnElement="Flow_0n2go0x">
-        <di:waypoint x="215" y="117" />
-        <di:waypoint x="270" y="117" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_08e9zv5_di" bpmnElement="Flow_08e9zv5">
         <di:waypoint x="370" y="117" />
         <di:waypoint x="400" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0n2go0x_di" bpmnElement="Flow_0n2go0x">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1wgxd8a_di" bpmnElement="Flow_1wgxd8a">
         <di:waypoint x="500" y="117" />

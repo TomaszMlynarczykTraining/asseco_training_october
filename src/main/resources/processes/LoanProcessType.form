@@ -1,28 +1,23 @@
 {
   "components": [
     {
-      "values": [
-        {
-          "label": "Długoterminowa",
-          "value": "LONG"
-        },
-        {
-          "label": "Krótkoterminowa",
-          "value": "SHORT"
-        },
-        {
-          "label": "Mieszkaniowa",
-          "value": "HOUSE"
-        }
-      ],
-      "label": "Wybierz rodzaj pożyczki",
-      "type": "radio",
-      "id": "Field_0tu3876",
-      "key": "loanProcessType",
-      "validate": {
-        "required": true
-      },
-      "defaultValue": "LONG"
+      "label": "Długoterminowa",
+      "type": "checkbox",
+      "id": "Field_0cr11k4",
+      "key": "isLongLoanTerm",
+      "properties": {}
+    },
+    {
+      "label": "Krótkoterminowa",
+      "type": "checkbox",
+      "id": "Field_0f1uj9g",
+      "key": "isShortLoanTerm"
+    },
+    {
+      "label": "Mieszkaniowa",
+      "type": "checkbox",
+      "id": "Field_1w0tmay",
+      "key": "isHouseLoanTerm"
     }
   ],
   "type": "default",

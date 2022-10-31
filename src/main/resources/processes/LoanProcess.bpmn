@@ -16,22 +16,28 @@
         </bpmn:childLaneSet>
       </bpmn:lane>
       <bpmn:lane id="Lane_12rntov" name="System">
-        <bpmn:flowNodeRef>LP_050</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>LP_060</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0cn1h45</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LP_120</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LP_020</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LP_010_START</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LP_010</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LP_046</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LP_050</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0brnpdd</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LP_060</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LP_045</bpmn:flowNodeRef>
         <bpmn:childLaneSet id="LaneSet_1tzy279">
           <bpmn:lane id="Lane_1qa2r4h">
-            <bpmn:flowNodeRef>LP_050</bpmn:flowNodeRef>
-            <bpmn:flowNodeRef>LP_060</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Event_0cn1h45</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>LP_120</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>LP_020</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>LP_010_START</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>LP_010</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LP_046</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LP_050</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Event_0brnpdd</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LP_060</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>LP_045</bpmn:flowNodeRef>
           </bpmn:lane>
         </bpmn:childLaneSet>
       </bpmn:lane>
@@ -52,15 +58,6 @@
         </bpmn:childLaneSet>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:serviceTask id="LP_050" name="LP_050 Validate user data" camunda:delegateExpression="${loanProcessValidateCustomerDataDelegate}">
-      <bpmn:incoming>Flow_0lwgpw6</bpmn:incoming>
-      <bpmn:outgoing>Flow_0nco5sd</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:exclusiveGateway id="LP_060" name="LP_060 Data correct">
-      <bpmn:incoming>Flow_0nco5sd</bpmn:incoming>
-      <bpmn:outgoing>Flow_0tlmapd</bpmn:outgoing>
-      <bpmn:outgoing>Flow_1y91kjd</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
     <bpmn:endEvent id="Event_0cn1h45" name="end loan process">
       <bpmn:incoming>Flow_012yfgh</bpmn:incoming>
     </bpmn:endEvent>
@@ -74,6 +71,7 @@
       <bpmn:outgoing>Flow_1ixrfdy</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="LP_040" name="LP_040 Fill in data" camunda:formRef="Form_LP_InputClientData" camunda:formRefBinding="latest">
+      <bpmn:extensionElements />
       <bpmn:incoming>Flow_1ixrfdy</bpmn:incoming>
       <bpmn:outgoing>Flow_0lwgpw6</bpmn:outgoing>
     </bpmn:userTask>
@@ -98,7 +96,6 @@
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!isCorrect}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1ozqosb" sourceRef="LP_020" targetRef="LP_030" />
-    <bpmn:sequenceFlow id="Flow_0lwgpw6" sourceRef="LP_040" targetRef="LP_050" />
     <bpmn:sequenceFlow id="Flow_0nco5sd" sourceRef="LP_050" targetRef="LP_060" />
     <bpmn:sequenceFlow id="Flow_012yfgh" sourceRef="LP_120" targetRef="Event_0cn1h45" />
     <bpmn:sequenceFlow id="Flow_1ixrfdy" sourceRef="LP_030" targetRef="LP_040" />
@@ -149,6 +146,35 @@
       <bpmn:outgoing>Flow_061i855</bpmn:outgoing>
       <bpmn:signalEventDefinition id="SignalEventDefinition_0g2fx9x" signalRef="Signal_20agvfu" />
     </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0lwgpw6" sourceRef="LP_040" targetRef="LP_045" />
+    <bpmn:sequenceFlow id="Flow_0vlpxiv" sourceRef="LP_046" targetRef="LP_050">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!duplicateCustomer}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="LP_046" name="LP_46 Duplicates?">
+      <bpmn:incoming>Flow_0nbiiqf</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vd9kyj</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0vlpxiv</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0nbiiqf" sourceRef="LP_045" targetRef="LP_046" />
+    <bpmn:sequenceFlow id="Flow_0vd9kyj" sourceRef="LP_046" targetRef="Event_0brnpdd">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${duplicateCustomer}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="LP_050" name="LP_050 Validate user data" camunda:delegateExpression="${loanProcessValidateCustomerDataDelegate}">
+      <bpmn:incoming>Flow_0vlpxiv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nco5sd</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_0brnpdd" name="Koniec - duplikat">
+      <bpmn:incoming>Flow_0vd9kyj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="LP_060" name="LP_060 Data correct">
+      <bpmn:incoming>Flow_0nco5sd</bpmn:incoming>
+      <bpmn:outgoing>Flow_0tlmapd</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1y91kjd</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="LP_045" name="LP_045 Verified duplicates" camunda:delegateExpression="${checkCustomerIDProcessDelegate}">
+      <bpmn:incoming>Flow_0lwgpw6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nbiiqf</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:signal id="Signal_20agvfu" name="StartLoanProcessSignal" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -176,16 +202,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1hlivxz_di" bpmnElement="Lane_1hlivxz" isHorizontal="true">
         <dc:Bounds x="212" y="80" width="1288" height="160" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1q5mwjf_di" bpmnElement="LP_050">
-        <dc:Bounds x="690" y="360" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1m78rt7_di" bpmnElement="LP_060" isMarkerVisible="true">
-        <dc:Bounds x="835" y="375" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="829" y="351" width="65" height="27" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0cn1h45_di" bpmnElement="Event_0cn1h45">
         <dc:Bounds x="1382" y="382" width="36" height="36" />
@@ -244,6 +260,32 @@
           <dc:Bounds x="215" y="465" width="74" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1f3hf7g_di" bpmnElement="LP_046" isMarkerVisible="true">
+        <dc:Bounds x="785" y="265" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="783" y="242" width="58" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1q5mwjf_di" bpmnElement="LP_050">
+        <dc:Bounds x="990" y="360" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0brnpdd_di" bpmnElement="Event_0brnpdd">
+        <dc:Bounds x="792" y="352" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="769" y="395" width="83" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1m78rt7_di" bpmnElement="LP_060" isMarkerVisible="true">
+        <dc:Bounds x="855" y="425" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="849" y="401" width="65" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_001rd2p_di" bpmnElement="LP_045">
+        <dc:Bounds x="615" y="280" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0fo4ekc_di" bpmnElement="Flow_0fo4ekc">
         <di:waypoint x="930" y="655" />
         <di:waypoint x="930" y="580" />
@@ -273,11 +315,11 @@
         <di:waypoint x="1240" y="705" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0tlmapd_di" bpmnElement="Flow_0tlmapd">
-        <di:waypoint x="880" y="405" />
+        <di:waypoint x="880" y="475" />
         <di:waypoint x="880" y="680" />
         <di:waypoint x="905" y="680" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="884" y="648" width="18" height="14" />
+          <dc:Bounds x="895" y="670" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0mr7vt7_di" bpmnElement="Flow_0mr7vt7">
@@ -290,13 +332,12 @@
         <di:waypoint x="325" y="350" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1y91kjd_di" bpmnElement="Flow_1y91kjd">
-        <di:waypoint x="860" y="425" />
-        <di:waypoint x="860" y="470" />
-        <di:waypoint x="430" y="470" />
+        <di:waypoint x="855" y="450" />
+        <di:waypoint x="430" y="450" />
         <di:waypoint x="430" y="350" />
         <di:waypoint x="375" y="350" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="638" y="452" width="15" height="14" />
+          <dc:Bounds x="412" y="393" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ozqosb_di" bpmnElement="Flow_1ozqosb">
@@ -304,15 +345,11 @@
         <di:waypoint x="350" y="150" />
         <di:waypoint x="390" y="150" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0lwgpw6_di" bpmnElement="Flow_0lwgpw6">
-        <di:waypoint x="630" y="150" />
-        <di:waypoint x="665" y="150" />
-        <di:waypoint x="665" y="400" />
-        <di:waypoint x="690" y="400" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0nco5sd_di" bpmnElement="Flow_0nco5sd">
-        <di:waypoint x="790" y="400" />
-        <di:waypoint x="835" y="400" />
+        <di:waypoint x="990" y="400" />
+        <di:waypoint x="948" y="400" />
+        <di:waypoint x="948" y="450" />
+        <di:waypoint x="905" y="450" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_012yfgh_di" bpmnElement="Flow_012yfgh">
         <di:waypoint x="1340" y="400" />
@@ -329,6 +366,26 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="291" y="422" width="38" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lwgpw6_di" bpmnElement="Flow_0lwgpw6">
+        <di:waypoint x="630" y="150" />
+        <di:waypoint x="665" y="150" />
+        <di:waypoint x="665" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vlpxiv_di" bpmnElement="Flow_0vlpxiv">
+        <di:waypoint x="835" y="290" />
+        <di:waypoint x="1040" y="290" />
+        <di:waypoint x="1040" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nbiiqf_di" bpmnElement="Flow_0nbiiqf">
+        <di:waypoint x="715" y="320" />
+        <di:waypoint x="750" y="320" />
+        <di:waypoint x="750" y="290" />
+        <di:waypoint x="785" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vd9kyj_di" bpmnElement="Flow_0vd9kyj">
+        <di:waypoint x="810" y="315" />
+        <di:waypoint x="810" y="352" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

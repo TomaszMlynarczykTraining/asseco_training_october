@@ -15,4 +15,6 @@ public class LoanProcessVariable {
 
     public static String CURRENCY = "currency";
 
+    public static String DUPLICATE_CUSTOMER = "duplicateCustomer";
+
 }

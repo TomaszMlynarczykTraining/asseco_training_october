@@ -28,5 +28,7 @@ public class CheckCustomerIDProcessDelegate implements JavaDelegate {
 
         Boolean duplicateProcess = processInstanceList.size() > 1;
 
+        delegateExecution.setVariable(LoanProcessVariable.DUPLICATE_CUSTOMER, duplicateProcess);
+
     }
 }

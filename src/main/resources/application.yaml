@@ -20,3 +20,6 @@ camunda.bpm.client:
   subscriptions:
     getFact:
       include-extension-properties: true
+
+    currencyExchange:
+      include-extension-properties: false

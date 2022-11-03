@@ -27,7 +27,7 @@ public class LoanProcessValidateCustomerDataDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
 
-        Integer id = (Integer) delegateExecution.getVariable(LoanProcessVariable.ID);
+        String id = (String) delegateExecution.getVariable(LoanProcessVariable.ID);
         String street = (String) delegateExecution.getVariable(LoanProcessVariable.STREET);
         String phoneNumber = (String) delegateExecution.getVariable(LoanProcessVariable.PHONE_NUMBER);
         String declaredIncome = (String) delegateExecution.getVariable(LoanProcessVariable.DECLARED_INCOME);
@@ -35,7 +35,7 @@ public class LoanProcessValidateCustomerDataDelegate implements JavaDelegate {
 
         delegateExecution.setVariable(LoanProcessVariable.IS_CORRECT, true);
 
-        Optional<Client> optionalClient = clientRepository.findById(id.longValue());
+        Optional<Client> optionalClient = clientRepository.findById(Long.parseLong(id));
 
         if (optionalClient.isPresent()) {
             if (!optionalClient.get().getStreet().equals(street) ||

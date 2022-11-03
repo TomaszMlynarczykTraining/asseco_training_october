@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import com.example.workflow.mvc.delegates.MockDelegate;
 import com.example.workflow.mvc.delegates.Somebean;
 import com.example.workflow.mvc.loanProcess.CheckCustomerIDProcessDelegate;
 import com.example.workflow.mvc.loanProcess.LoanProcessValidateCustomerDataDelegate;
@@ -18,20 +19,21 @@ import static org.camunda.bpm.engine.variable.Variables.createVariables;
 
 @Deployment(resources = {
         "processes/LoanProcess.bpmn"
-        ,
-        "processes/long_term_loan_process/LongTermLoanProcess.bpmn"
+        //,"processes/long_term_loan_process/LongTermLoanProcess.bpmn"
 })
 public class LoanProcessTest extends  AbstractProcessEngineRuleTest {
 
     @Mock
     Somebean somebean;
     CheckCustomerIDProcessDelegate checkCustomerIDProcessDelegate;
+    MockDelegate mockDelegate;
     LoanProcessValidateCustomerDataDelegate loanProcessValidateCustomerDataDelegate;
 
     @Test
     public void testHappyPath(){
         DelegateExpressions.registerJavaDelegateMock("checkCustomerIDProcessDelegate").onExecutionSetVariables(createVariables()
                 .putValue("duplicateCustomer", Boolean.FALSE));
+        DelegateExpressions.registerJavaDelegateMock("mockDelegate");
         DelegateExpressions.registerJavaDelegateMock("loanProcessValidateCustomerDataDelegate").onExecutionSetVariables(createVariables()
                 .putValue("isCorrect", Boolean.TRUE)
                 .putValue("isLongLoanTerm", Boolean.TRUE)
@@ -41,8 +43,8 @@ public class LoanProcessTest extends  AbstractProcessEngineRuleTest {
         MockitoAnnotations.openMocks(this);
 
 // umiescic implementacje dla procesu podrzednego
-       //ProcessExpressions.registerCallActivityMock("LongTermLoanProcess").deploy(processEngine);
-        ProcessExpressions.registerCallActivityMock("LongTermLoanProcess");
+       ProcessExpressions.registerCallActivityMock("LongTermLoanProcess").deploy(processEngine);
+       // ProcessExpressions.registerCallActivityMock("LongTermLoanProcess");
 
 
         ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("Loan_Process");

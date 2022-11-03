@@ -37,7 +37,7 @@ public class IncidentProcessTest  extends  AbstractProcessEngineRuleTest {
         assertThat(processInstance).isWaitingAt("Activity_0eyz6ov");
 
         Task task = taskService().createTaskQuery().processInstanceId(processInstance.getProcessInstanceId()).singleResult();
-        complete(task );
+        complete(task);
 
         execute(job("Event_0qdik5i"));
 

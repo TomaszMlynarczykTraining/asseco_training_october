@@ -8,6 +8,7 @@ import org.camunda.bpm.spring.boot.starter.test.helper.AbstractProcessEngineRule
 import org.camunda.community.mockito.DelegateExpressions;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
@@ -22,15 +23,22 @@ public class IncidentProcessTest  extends  AbstractProcessEngineRuleTest {
 
     @Test
     public void testHappyPath(){
-        DelegateExpressions.registerJavaDelegateMock("someBean");
+        DelegateExpressions.registerJavaDelegateMock("somebean");
+        MockitoAnnotations.openMocks(this);
+
 // umiescic implementacje dla procesu podrzednego
+       /* ProcessExpressions.registerSubProcessMock(SUB_PROCESS_ID)
+                .onExecutionWaitForMessage("SomeMessage")
+                .onExecutionWaitForTimerWithDate(waitUntilDate)
+                .onExecutionSetVariables(createVariables().putValue("foo", "bar"))
+                .deploy(rule);*/
+
         ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("Process_10n1nyt");
         assertThat(processInstance).isWaitingAt("Activity_0eyz6ov");
 
         Task task = taskService().createTaskQuery().processInstanceId(processInstance.getProcessInstanceId()).singleResult();
-        complete(task);
+        complete(task );
 
-        assertThat(processInstance).isWaitingAt("Event_0qdik5i");
         execute(job("Event_0qdik5i"));
 
         assertThat(processInstance).isEnded();

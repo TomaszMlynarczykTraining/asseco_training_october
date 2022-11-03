@@ -10,7 +10,7 @@
       <bpmn:incoming>Flow_0o5z0mp</bpmn:incoming>
       <bpmn:outgoing>Flow_0phqpbh</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_1geomua" name="Not found service" camunda:asyncBefore="true" camunda:asyncAfter="true" camunda:delegateExpression="${somebean}">
+    <bpmn:serviceTask id="Activity_1geomua" name="Not found service" camunda:delegateExpression="${somebean}">
       <bpmn:incoming>Flow_1itoao4</bpmn:incoming>
       <bpmn:outgoing>Flow_1b6zlfm</bpmn:outgoing>
     </bpmn:serviceTask>

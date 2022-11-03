@@ -50,6 +50,12 @@ public class ShortTermProsessTest extends AbstractProcessEngineRuleTest {
                 .onExecutionSetVariables(createVariables()
                         .putValue("debtAmount", 5000)
                 );
+        DelegateExpressions.registerJavaDelegateMock("calculationDelegate")
+                .onExecutionSetVariables(createVariables()
+                        .putValue("positivelyVerified", "Yes")
+                        .putValue("userDecision", "yes")
+                        .putValue("debtAmount", 5000)
+                );
 
         MockitoAnnotations.openMocks(this);
         ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(processDefinitionKey, variables);
@@ -59,14 +65,11 @@ public class ShortTermProsessTest extends AbstractProcessEngineRuleTest {
         Task task = taskService().createTaskQuery().processInstanceId(processInstance.getProcessInstanceId()).singleResult();
         complete(task );
 
+
+
         ProcessExpressions.registerCallActivityMock("Process_1jodzqq")
+
                 .onExecutionAddVariable("positivelyVerified", "Yes");
 
-        DelegateExpressions.registerJavaDelegateMock("calculationDelegate")
-                .onExecutionSetVariables(createVariables()
-                        .putValue("positivelyVerified", "Yes")
-                        .putValue("userDecision", "yes")
-                        .putValue("debtAmount", 5000)
-                );
     }
     }

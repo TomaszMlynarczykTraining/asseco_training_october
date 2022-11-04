@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0e3ry3h" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <bpmn:process id="BP_Currency_Exchange" name="Currency Exchange" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0rd0bfm</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_00eq95l">
+      <bpmn:incoming>Flow_0zidd79</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="currencyExchange" name="Pobierz przelicznik waluty" camunda:type="external" camunda:topic="currencyExchange">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_0rd0bfm</bpmn:incoming>
+      <bpmn:outgoing>Flow_01mxl4c</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0rd0bfm" sourceRef="StartEvent_1" targetRef="currencyExchange" />
+    <bpmn:sequenceFlow id="Flow_01mxl4c" sourceRef="currencyExchange" targetRef="Activity_1trrwfx" />
+    <bpmn:sequenceFlow id="Flow_0zidd79" sourceRef="Activity_1trrwfx" targetRef="Event_00eq95l" />
+    <bpmn:userTask id="Activity_1trrwfx" name="Test zmiennej">
+      <bpmn:incoming>Flow_01mxl4c</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zidd79</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="BP_Currency_Exchange">
+      <bpmndi:BPMNShape id="Event_00eq95l_di" bpmnElement="Event_00eq95l">
+        <dc:Bounds x="852" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0jlpuza_di" bpmnElement="currencyExchange">
+        <dc:Bounds x="350" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1s8zv9p_di" bpmnElement="Activity_1trrwfx">
+        <dc:Bounds x="610" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0zidd79_di" bpmnElement="Flow_0zidd79">
+        <di:waypoint x="710" y="120" />
+        <di:waypoint x="852" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rd0bfm_di" bpmnElement="Flow_0rd0bfm">
+        <di:waypoint x="215" y="120" />
+        <di:waypoint x="350" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01mxl4c_di" bpmnElement="Flow_01mxl4c">
+        <di:waypoint x="450" y="120" />
+        <di:waypoint x="610" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

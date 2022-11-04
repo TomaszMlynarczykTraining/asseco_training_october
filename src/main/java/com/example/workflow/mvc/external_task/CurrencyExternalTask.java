@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 @Component
-@ExternalTaskSubscription("getCurrency") // create a subscription for this topic name
+@ExternalTaskSubscription("getCurrencyTwo") // create a subscription for this topic name
 public class CurrencyExternalTask implements ExternalTaskHandler {
 
     public static final String SERVER_URI = "https://api.nbp.pl/api/exchangerates/rates/a/chf/?format=json";

@@ -1,5 +1,6 @@
 package com.example.workflow.mvc.delegates;
 
+import org.camunda.bpm.client.ExternalTaskClient;
 import org.camunda.bpm.client.spring.annotation.ExternalTaskSubscription;
 import org.camunda.bpm.client.task.ExternalTask;
 import org.camunda.bpm.client.task.ExternalTaskHandler;
@@ -20,10 +21,10 @@ public class MockExternalTask implements ExternalTaskHandler {
         System.out.println(externalTask.getBusinessKey());
 
         VariableMap variables = Variables.createVariables();
-
         variables.put("customerSurname", "Batman");
 
-        externalTaskService.complete(externalTask);
+        externalTaskService.complete(externalTask, variables);
+        externalTaskService.setVariables(externalTask, variables);
 
     }
 }

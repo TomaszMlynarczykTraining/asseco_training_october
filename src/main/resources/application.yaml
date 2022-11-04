@@ -20,3 +20,5 @@ camunda.bpm.client:
   subscriptions:
     getFact:
       include-extension-properties: true
+    getCurrency:
+      include-extension-properties: true

@@ -3,7 +3,7 @@
     {
       "label": "ID",
       "type": "textfield",
-      "id": "Field_1llxuvd",
+      "id": "Field_0x9ddol",
       "key": "customerID",
       "defaultValue": "3",
       "validate": {

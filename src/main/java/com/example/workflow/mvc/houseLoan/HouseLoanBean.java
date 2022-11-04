@@ -20,7 +20,9 @@ public class HouseLoanBean{
     @GetMapping("/start")
     public void startProcess(){
         runtimeService.startProcessInstanceByKey("Process_houseLoan", new HashMap<>(){{
-            put("debt", 400); }});
+            put("debt", 400);
+            put("currency", "USD");
+        }});
 
     }
 
